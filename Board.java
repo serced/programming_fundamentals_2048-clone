@@ -1,5 +1,6 @@
 import java.util.Random;
 import java.util.LinkedList;
+import java.util.ArrayList;
 /**
  * This class should contain the main grid of our Game and 
  * all the methods that handle a specific
@@ -118,9 +119,9 @@ public class Board
      *
      * @return the list of Boxes
      */
-    public LinkedList<Box> emptyBoxPosition()
+    public ArrayList<Box> emptyBoxPosition()
     {
-        LinkedList<Box> empty = new LinkedList<Box>();
+        ArrayList<Box> empty = new ArrayList<Box>();
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 if (grid[i][j].getValue() == 0) {
@@ -137,9 +138,9 @@ public class Board
      *
      * @return the list of Boxes
      */
-    public LinkedList<Box> filledBoxPosition()
+    public ArrayList<Box> filledBoxPosition()
     {
-        LinkedList<Box> filled = new LinkedList<Box>();
+        ArrayList<Box> filled = new ArrayList<Box>();
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 if (grid[i][j].getValue() != 0) {
@@ -162,7 +163,7 @@ public class Board
     {
         int rowTemp = 0;
         int colTemp = 0;
-        LinkedList<Box> availPositions = emptyBoxPosition();
+        ArrayList<Box> availPositions = emptyBoxPosition();
         // somehow we should generate over these positions randomly a new box of 2
         return new Box(2); //we have to return this
     }
