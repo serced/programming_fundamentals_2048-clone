@@ -10,7 +10,7 @@
 public class Box
 {
     // instance variables 
-    private final int value;
+    private int value;
     private int row;
     private int column;
 
@@ -56,6 +56,26 @@ public class Box
     }
     
     /**
+     * Returns the row field of the Box
+     *
+     * @return  an integer representing the row
+     */
+    public int getRow()
+    {
+        return this.row;
+    }
+    
+    /**
+     * Returns the column field of the Box
+     *
+     * @return  an integer representing the column
+     */
+    public int getColumn()
+    {
+        return this.column;
+    }
+    
+    /**
      * Checks if two consecutives boxes on our grid that are 
      * consecutive with regards to a spesific row, have equals
      * values.
@@ -73,4 +93,27 @@ public class Box
         }
     }
     
+    /**
+     * Check whether In case that 2 consecutive boxes are equal either in a row
+     * or a collumn 
+     * 
+     * @ return true if they can be merged
+     */
+    public boolean canMerge(Box other)
+    {
+        return this.equal(other);
+    }
+    
+    /**
+     * Merges two boxes 
+     *
+     * @param  other  the other box
+     */
+    public int merge(Box other){
+        if (this.canMerge(other)) {
+            this.value += other.value;
+            return value;
+        }
+        return -1;
+    }
 }

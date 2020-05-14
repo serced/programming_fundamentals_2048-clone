@@ -13,15 +13,30 @@ import java.util.ArrayList;
 public class Board
 {
     // instance variables - replace the example below with your own
+    
+    private static final int SIZE = 4;
     private Box[][] grid;
+    private SwipeDirection direction;
+    
+    /**
+     * Constructor for objects of class Board.
+     */
+    public Board()
+    {
+        // initialise instance variables
+        grid = new Box[SIZE][SIZE];
+    }
     
     /**
      * Constructor for objects of class Board.
      */
     public Board(int dim)
     {
-        // initialise instance variables
-        grid = new Box[dim][dim];
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                grid[i][j] = new Box(i,j,0);
+            }
+        }
     }
     
     /**
@@ -41,13 +56,9 @@ public class Board
      * where we have 
      *
      */
-    public void refresh()
+    public Board refresh()
     {
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
-                grid[i][j] = new Box();
-            }
-        }
+        return new Board(SIZE);
         // call the random generator here
     }
     
@@ -92,6 +103,29 @@ public class Board
     }
     
     /**
+     * Method that swipes right the current configuration 
+     * of the Game
+     * 
+     */
+    public void swipeToDirection(SwipeDirection direction)
+    {
+        switch (direction) {
+            case UP: 
+                swipeUp();
+                break;
+            case DOWN:  
+                swipeDown(); 
+                break;
+            case LEFT: 
+                swipeLeft();
+                break;
+            case RIGHT:  
+                swipeRight();
+                break;
+        }
+    }
+    
+    /**
      * // TODO explain thoroughly
      * 
      */
@@ -101,7 +135,7 @@ public class Board
     }
     
     /**
-     * In case that 2 cnsecutive boxes are equal either in a row
+     * In case that 2 consecutive boxes are equal either in a row
      * or a cillumn then they have to get merged and form on box that
      * contains the result of their addition.
      * 
@@ -150,21 +184,25 @@ public class Board
         }
         return filled;
     }
-    
+   
     
     /**
      * Returns a new block within the grid in a position, 
      * that is valid (there has not block bigger than 0)
      *
      * @return  a boolean value that corresponds 
-     *          to the existence of equality
+       *          to the existence of equality
      */
     public Box randomGenerator()
-    {
-        int rowTemp = 0;
-        int colTemp = 0;
-        ArrayList<Box> availPositions = emptyBoxPosition();
+    {   
+        ArrayList<Box> availPositions = this.emptyBoxPosition();
+        if (!availPositions.isEmpty()) {
+            int randomPosition = (int) (Math.random() * availPositions.size());
+            Box rand = new Box(2, availPositions.get(randomPosition).getRow(),
+                                availPositions.get(randomPosition).getColumn());
+	}
         // somehow we should generate over these positions randomly a new box of 2
-        return new Box(2); //we have to return this
+        return new Box(); //we have to return this?
     }
+    
 }
