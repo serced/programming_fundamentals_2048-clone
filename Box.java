@@ -86,11 +86,7 @@ public class Box
      */
     public boolean equal(Box other)
     {
-        if (this.value == other.value) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.value == other.value;
     }
     
     /**
