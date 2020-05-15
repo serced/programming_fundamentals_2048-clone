@@ -32,11 +32,19 @@ public class Board
      */
     public Board(int dim)
     {
+        grid = new Box[SIZE][SIZE];
+<<<<<<< HEAD
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
+                grid[i][j] = new Box(0,i,j);
+=======
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
                 grid[i][j] = new Box(i,j,0);
+>>>>>>> 0e985ccd61994ac237286d468a1cc847dccef7bc
             }
         }
+        // call the random initializer
     }
     
     /**
@@ -47,7 +55,7 @@ public class Board
      */
     public Board(Box[][] array)
     {
-        // initialise instance variables
+        // TODO
         grid = array;
     }
   
@@ -59,7 +67,6 @@ public class Board
     public Board refresh()
     {
         return new Board(SIZE);
-        // call the random generator here
     }
     
     /**
@@ -100,6 +107,12 @@ public class Board
     public void swipeRight()
     {
         // TODO
+        // loop over all boxes and merge/move right if possible
+        // for swipe right we have to start at the right most column
+        // otherwise there will be merge conflicts and we only want
+        // 1 merge (i.e. if last column has 0, 16, 16, 32)
+        // we should end up with 0,0,32,32 not 0,0,0,64
+        
     }
     
     /**
@@ -126,7 +139,7 @@ public class Board
     }
     
     /**
-     * // TODO explain thoroughly
+     * When the board can't be moved in the input direction, don't do anything
      * 
      */
     public void isValidMove()
@@ -134,18 +147,6 @@ public class Board
         // TODO
     }
     
-    /**
-     * In case that 2 consecutive boxes are equal either in a row
-     * or a cillumn then they have to get merged and form on box that
-     * contains the result of their addition.
-     * 
-     * @ return the merged Box
-     */
-    public Box merge()
-    {
-        // TODO
-        return new Box();
-    }
     
     /**
      * Method that returns a list consisting of the 
@@ -200,9 +201,10 @@ public class Board
             int randomPosition = (int) (Math.random() * availPositions.size());
             Box rand = new Box(2, availPositions.get(randomPosition).getRow(),
                                 availPositions.get(randomPosition).getColumn());
+            return rand;
 	}
         // somehow we should generate over these positions randomly a new box of 2
-        return new Box(); //we have to return this?
+        return null; //we have to return this?
     }
     
 }
