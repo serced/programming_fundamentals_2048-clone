@@ -14,16 +14,16 @@ public class Box
     private int row;
     private int column;
 
-    /**
-     * Constructor for objects of class Block
-     */
-    public Box()
-    {
-        // initialise instance variables
-        this.value = 0;
-        this.row = 0;
-        this.column = 0;
-    }
+    // /**
+     // * Constructor for objects of class Block
+     // */
+    // public Box()
+    // {
+        // // initialise instance variables
+        // this.value = 0;
+        // this.row = 0;
+        // this.column = 0;
+    // }
     
     /**
      * Constructor for objects of class Block
@@ -95,7 +95,7 @@ public class Box
      * 
      * @ return true if they can be merged
      */
-    public boolean canMerge(Box other)
+    public boolean canMerge(final Box other)
     {
         return this.equal(other);
     }
@@ -105,7 +105,7 @@ public class Box
      *
      * @param  other  the other box
      */
-    public int merge(Box other){
+    public int merge(final Box other){
         if (this.canMerge(other)) {
             this.value += other.value;
             return value;

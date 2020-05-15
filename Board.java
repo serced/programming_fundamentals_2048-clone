@@ -32,12 +32,13 @@ public class Board
      */
     public Board(int dim)
     {
-        grid = new Box[SIZE][SIZE];
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
+        grid = new Box[dim][dim];
+        for (int i = 0; i < dim; i++) {
+            for (int j = 0; j < dim; j++) {
                 grid[i][j] = new Box(i,j,0);
             }
         }
+        // call random generator
     }
     
     /**
@@ -141,18 +142,18 @@ public class Board
         // TODO
     }
     
-    /**
-     * In case that 2 consecutive boxes are equal either in a row
-     * or a cillumn then they have to get merged and form on box that
-     * contains the result of their addition.
-     * 
-     * @ return the merged Box
-     */
-    public Box merge()
-    {
-        // TODO
-        return new Box();
-    }
+    // /**
+     // * In case that 2 consecutive boxes are equal either in a row
+     // * or a cillumn then they have to get merged and form on box that
+     // * contains the result of their addition.
+     // * 
+     // * @ return the merged Box
+     // */
+    // public Box merge()
+    // {
+        // // TODO
+        // return new Box();
+    // }
     
     /**
      * Method that returns a list consisting of the 
@@ -205,8 +206,8 @@ public class Board
         ArrayList<Box> availPositions = this.emptyBoxPosition();
         if (!availPositions.isEmpty()) {
             int randomPosition = (int) (Math.random() * availPositions.size());
-            Box rand = new Box(2, availPositions.get(randomPosition).getRow(),
-                                availPositions.get(randomPosition).getColumn());
+            Box temp = availPositions.get(randomPosition);
+            return new Box(2, temp.getRow(),temp.getColumn());
 	}
         // somehow we should generate over these positions randomly a new box of 2
         return null; //we have to return this?
