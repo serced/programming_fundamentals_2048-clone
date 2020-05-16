@@ -25,6 +25,14 @@ public class Board
     {
         // initialise instance variables
         grid = new Box[SIZE][SIZE];
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                grid[i][j] = new Box(0,i,j);
+            }
+        }
+        // call random generator
+        randomGenerator();
+        randomGenerator();
     }
     
     /**
@@ -39,6 +47,8 @@ public class Board
             }
         }
         // call random generator
+        randomGenerator();
+        randomGenerator();
     }
     
     /**
@@ -103,10 +113,31 @@ public class Board
     {
         // TODO
         // loop over all boxes and merge/move right if possible
-        // for swipe right we have to start at the right most column
+        // for swipe right we have to start at the 2nd right most column
         // otherwise there will be merge conflicts and we only want
         // 1 merge (i.e. if last column has 0, 16, 16, 32)
         // we should end up with 0,0,32,32 not 0,0,0,64
+        
+        // loop over columns
+        for (int i = SIZE - 1; i > 0; i--) {
+            // loop over rows
+            for (int j = 0; i < SIZE; i++) {
+                // now move when we can, or merge when we can
+                Box left = grid[j][i-1];
+                Box right = grid[j][i];
+                if (right.getValue() == 0 && left.getValue() != 0) {
+                    grid[j][i] = new Box(left.getValue(), j, i);
+                    // replacing it with empty cell such that next can also move
+                    grid[j][i - 1] = new Box(right.getValue(), j, i - 1); 
+                }
+                else if (grid[j][i-1].canMerge(grid[j][i])) {
+                    // merge left grid with right
+                    grid[j][i] = grid[j][i-1].merge(grid[j][i]);
+                    grid[j][i - 1] = new Box(0, j, i - 1);
+                }
+                    
+            }
+        }
         
     }
     
@@ -161,7 +192,7 @@ public class Board
      *
      * @return the list of Boxes
      */
-    public ArrayList<Box> emptyBoxPosition()
+    public ArrayList<Box> emptyBoxPositions()
     {
         ArrayList<Box> empty = new ArrayList<Box>();
         for (int i = 0; i < grid.length; i++) {
@@ -180,7 +211,7 @@ public class Board
      *
      * @return the list of Boxes
      */
-    public ArrayList<Box> filledBoxPosition()
+    public ArrayList<Box> filledBoxPositions()
     {
         ArrayList<Box> filled = new ArrayList<Box>();
         for (int i = 0; i < grid.length; i++) {
@@ -201,16 +232,21 @@ public class Board
      * @return  a boolean value that corresponds 
        *          to the existence of equality
      */
-    public Box randomGenerator()
+    public void randomGenerator()
     {   
-        ArrayList<Box> availPositions = this.emptyBoxPosition();
+        ArrayList<Box> availPositions = this.emptyBoxPositions();
         if (!availPositions.isEmpty()) {
             int randomPosition = (int) (Math.random() * availPositions.size());
             Box temp = availPositions.get(randomPosition);
-            return new Box(2, temp.getRow(),temp.getColumn());
+            grid[temp.getRow()][temp.getColumn()] = new Box(2, temp.getRow(),temp.getColumn());
+            //return new Box(2, temp.getRow(),temp.getColumn());
 	}
         // somehow we should generate over these positions randomly a new box of 2
-        return null; //we have to return this?
+        // return null; //we have to return this?
+    }
+    
+    public Box[][] getState() {
+        return grid;
     }
     
 }

@@ -31,7 +31,7 @@ public class Box
     public Box(int value, int row, int column)
     {
         // initialise instance variables
-        this.value = 0;        
+        this.value = value;        
         this.row = row;
         this.column = column;
     }
@@ -105,11 +105,11 @@ public class Box
      *
      * @param  other  the other box
      */
-    public int merge(final Box other){
+    public Box merge(final Box other){
         if (this.canMerge(other)) {
             this.value += other.value;
-            return value;
+            return this;
         }
-        return -1;
+        return null;
     }
 }
