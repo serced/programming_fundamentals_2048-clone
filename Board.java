@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * be a 2-dimensional array, are going to be of Class type Box.
  * 
  * @ Author Maria Kolyvaki and Severin Husmann
- * @ version 1
+ * @ version 16.05.2020
  */
 public class Board
 {
@@ -43,7 +43,7 @@ public class Board
         grid = new Box[dim][dim];
         for (int i = 0; i < dim; i++) {
             for (int j = 0; j < dim; j++) {
-                grid[i][j] = new Box(i,j,0);
+                grid[i][j] = new Box(0,i,j);
             }
         }
         // call random generator
@@ -60,7 +60,12 @@ public class Board
     public Board(Box[][] array)
     {
         // TODO
-        grid = array;
+        this.grid = new Box[array.length][array.length];
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array.length; j++) {
+                grid[j][i] = array[j][i];
+            }
+        }
     }
   
     /**
@@ -109,7 +114,7 @@ public class Board
      * of the Game
      * 
      */
-    public void swipeRight()
+    public void swipeRightDeprecated()
     {
         // TODO
         // loop over all boxes and merge/move right if possible
@@ -119,27 +124,98 @@ public class Board
         // we should end up with 0,0,32,32 not 0,0,0,64
         
         // loop over columns
-        for (int i = SIZE - 1; i > 0; i--) {
+        boolean movedOrMerged = false;
+        for (int i = grid.length - 1; i > 0; i--) {
             // loop over rows
-            for (int j = 0; i < SIZE; i++) {
+            for (int j = 0; j < grid.length; j++) {
                 // now move when we can, or merge when we can
                 Box left = grid[j][i-1];
                 Box right = grid[j][i];
                 if (right.getValue() == 0 && left.getValue() != 0) {
                     grid[j][i] = new Box(left.getValue(), j, i);
                     // replacing it with empty cell such that next can also move
-                    grid[j][i - 1] = new Box(right.getValue(), j, i - 1); 
+                    grid[j][i - 1] = new Box(right.getValue(), j, i - 1);
+                    movedOrMerged = true;
                 }
                 else if (grid[j][i-1].canMerge(grid[j][i])) {
-                    // merge left grid with right
                     grid[j][i] = grid[j][i-1].merge(grid[j][i]);
                     grid[j][i - 1] = new Box(0, j, i - 1);
+                    movedOrMerged = true;
                 }
                     
             }
         }
+        // once we are done, we spawn a new element if possible
+        ArrayList<Box> emptyBoxes = emptyBoxPositions();
+        if (emptyBoxPositions().size() != 0 && movedOrMerged) {
+            randomGenerator();
+        }
         
     }
+    
+    /**
+     * Method that swipes right the current configuration 
+     * of the Game
+     * 
+     */
+    public void swipeRight()
+    {
+        // move the whole board to the right, then merge, then move again to fill holes
+        // then randomly spawn a new box in an empty slot
+        moveRight();
+        mergeRight();
+        moveRight();
+        // should only be called when we were actually able to move/merge!
+        randomSpawnBox(); 
+        
+    }
+    
+    private void moveRight() {
+        // make movement the number of column times, in order to move tile from fully left
+        // to fully right, should everything else be empty
+        for (int z = 0; z < grid[0].length; z++) {
+            // loop over columns - 1 
+            for (int i = 0; i < grid[0].length - 1; i++) {
+                // loop over rows
+                for (int j = 0; j < grid.length; j++) {
+                    // now move when possible
+                    Box left = grid[j][i];
+                    Box right = grid[j][i + 1];
+                    if (right.getValue() == 0 && left.getValue() != 0) {
+                        grid[j][i + 1] = new Box(left.getValue(), j, i + 1);
+                        // replacing it with empty cell such that next can also move
+                        grid[j][i] = new Box(right.getValue(), j, i);
+                    }
+                }
+            }
+        }
+    }
+    
+    private void mergeRight() {
+        // for merging we have to start from the right (if we merge "right-ways")
+        // otherwise we will have double merging
+        // loop over columns
+        for (int i = grid[0].length - 1; i > 0; i--) {
+            // loop over rows
+            for (int j = 0; j < grid.length; j++) {
+                // now move when possible
+                Box left = grid[j][i - 1];
+                Box right = grid[j][i];
+                if (grid[j][i - 1].canMerge(grid[j][i])) {
+                    grid[j][i] = grid[j][i-1].merge(grid[j][i]);
+                    grid[j][i - 1] = new Box(0, j, i - 1);
+                }
+            }
+        }
+    }
+    
+    private void randomSpawnBox() {
+        ArrayList<Box> emptyBoxes = emptyBoxPositions();
+        if (emptyBoxPositions().size() != 0) {
+            randomGenerator();
+        }
+    }
+    
     
     /**
      * Method that swipes right the current configuration 
@@ -172,19 +248,6 @@ public class Board
     {
         // TODO
     }
-    
-    // /**
-     // * In case that 2 consecutive boxes are equal either in a row
-     // * or a cillumn then they have to get merged and form on box that
-     // * contains the result of their addition.
-     // * 
-     // * @ return the merged Box
-     // */
-    // public Box merge()
-    // {
-        // // TODO
-        // return new Box();
-    // }
     
     /**
      * Method that returns a list consisting of the 
