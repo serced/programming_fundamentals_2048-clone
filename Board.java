@@ -33,6 +33,8 @@ public class Board
         // call random generator
         randomGenerator();
         randomGenerator();
+        // why does this not work:
+        // this = new Board(SIZE);
     }
     
     /**
@@ -59,7 +61,6 @@ public class Board
      */
     public Board(Box[][] array)
     {
-        // TODO
         this.grid = new Box[array.length][array.length];
         for (int i = 0; i < array.length; i++) {
             for (int j = 0; j < array.length; j++) {
@@ -106,52 +107,23 @@ public class Board
      */
     public void swipeLeft()
     {
-        // TODO
+        rotateRight();
+        rotateRight();
+        swipeRight();
+        rotateRight();
+        rotateRight();
     }
     
     /**
-     * Method that swipes right the current configuration 
-     * of the Game
+     * Method that rotates the grid right by 90 degrees
      * 
      */
-    public void swipeRightDeprecated()
+    public void rotateRight()
     {
         // TODO
-        // loop over all boxes and merge/move right if possible
-        // for swipe right we have to start at the 2nd right most column
-        // otherwise there will be merge conflicts and we only want
-        // 1 merge (i.e. if last column has 0, 16, 16, 32)
-        // we should end up with 0,0,32,32 not 0,0,0,64
-        
-        // loop over columns
-        boolean movedOrMerged = false;
-        for (int i = grid.length - 1; i > 0; i--) {
-            // loop over rows
-            for (int j = 0; j < grid.length; j++) {
-                // now move when we can, or merge when we can
-                Box left = grid[j][i-1];
-                Box right = grid[j][i];
-                if (right.getValue() == 0 && left.getValue() != 0) {
-                    grid[j][i] = new Box(left.getValue(), j, i);
-                    // replacing it with empty cell such that next can also move
-                    grid[j][i - 1] = new Box(right.getValue(), j, i - 1);
-                    movedOrMerged = true;
-                }
-                else if (grid[j][i-1].canMerge(grid[j][i])) {
-                    grid[j][i] = grid[j][i-1].merge(grid[j][i]);
-                    grid[j][i - 1] = new Box(0, j, i - 1);
-                    movedOrMerged = true;
-                }
-                    
-            }
-        }
-        // once we are done, we spawn a new element if possible
-        ArrayList<Box> emptyBoxes = emptyBoxPositions();
-        if (emptyBoxPositions().size() != 0 && movedOrMerged) {
-            randomGenerator();
-        }
-        
     }
+    
+    
     
     /**
      * Method that swipes right the current configuration 
@@ -170,6 +142,10 @@ public class Board
         
     }
     
+    /**
+     * Method that moves all Boxes as far right as possible without merging.
+     * 
+     */
     private void moveRight() {
         // make movement the number of column times, in order to move tile from fully left
         // to fully right, should everything else be empty
@@ -191,6 +167,10 @@ public class Board
         }
     }
     
+    /**
+     * Method that merges all Boxes in the direction right at most once. 
+     * 
+     */
     private void mergeRight() {
         // for merging we have to start from the right (if we merge "right-ways")
         // otherwise we will have double merging
@@ -209,6 +189,10 @@ public class Board
         }
     }
     
+    /**
+     * Spawns a box in a random location.
+     * 
+     */
     private void randomSpawnBox() {
         ArrayList<Box> emptyBoxes = emptyBoxPositions();
         if (emptyBoxPositions().size() != 0) {

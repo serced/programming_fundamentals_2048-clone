@@ -13,17 +13,6 @@ public class Box
     private int value;
     private int row;
     private int column;
-
-    // /**
-     // * Constructor for objects of class Block
-     // */
-    // public Box()
-    // {
-        // // initialise instance variables
-        // this.value = 0;
-        // this.row = 0;
-        // this.column = 0;
-    // }
     
     /**
      * Constructor for objects of class Block
@@ -93,7 +82,7 @@ public class Box
      * Check whether In case that 2 consecutive boxes are equal either in a row
      * or a collumn 
      * 
-     * @ return true if they can be merged
+     * @return true if they can be merged
      */
     public boolean canMerge(final Box other)
     {
