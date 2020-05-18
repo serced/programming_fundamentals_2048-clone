@@ -63,7 +63,7 @@ public class Board
     {
         this.grid = new Box[array.length][array.length];
         for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array.length; j++) {
+            for (int j = 0; j < array[0].length; j++) {
                 grid[j][i] = array[j][i];
             }
         }
@@ -126,7 +126,7 @@ public class Board
      * Method that rotates the grid right by 90 degrees
      * 
      */
-    public void rotateRight()
+    private void rotateRight()
     {
         // TODO
     }
@@ -144,12 +144,28 @@ public class Board
         // TODO fix the randomSpawnBox that it is only called when we were able to move/merge
         // move the whole board to the right, then merge, then move again to fill holes
         // then randomly spawn a new box in an empty slot
+        Box[][] oldBoard = copyBoxArray(grid);
         moveRight();
         mergeRight();
         moveRight();
         // should only be called when we were actually able to move/merge!
-        randomSpawnBox(); 
+        // can we spawn only when oldBoard is not equal anymore?
+        randomSpawnBox();
         
+    }
+    
+    /**
+     * Method to copy a given Box array to a new Box array.
+     */
+    private Box[][] copyBoxArray(Box[][] oldBoard)
+    {
+        Box[][] newBoard = new Box[oldBoard.length][oldBoard[0].length];
+        for (int i = 0; i < oldBoard.length; i++) {
+            for (int j = 0; j < oldBoard[0].length; j++) {
+                newBoard[i][j] = new Box(oldBoard[i][j].getValue(), i, j);
+            }
+        }
+        return newBoard;
     }
     
     /**
