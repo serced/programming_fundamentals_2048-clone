@@ -87,7 +87,11 @@ public class Board
      */
     public void swipeUp()
     {
-        // TODO
+        rotateRight();
+        swipeRight();
+        rotateRight();
+        rotateRight();
+        rotateRight();
     }
     
     /**
@@ -97,7 +101,11 @@ public class Board
      */
     public void swipeDown()
     {
-        // TODO
+        rotateRight();
+        rotateRight();
+        rotateRight();
+        swipeRight();
+        rotateRight();
     }
     
     /**
@@ -132,6 +140,8 @@ public class Board
      */
     public void swipeRight()
     {
+        // TODO check for game over
+        // TODO fix the randomSpawnBox that it is only called when we were able to move/merge
         // move the whole board to the right, then merge, then move again to fill holes
         // then randomly spawn a new box in an empty slot
         moveRight();
