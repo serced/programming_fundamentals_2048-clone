@@ -40,7 +40,7 @@ public class Board
     /**
      * Constructor for objects of class Board.
      */
-    public Board(int dim)
+    public Board(final int dim)
     {
         grid = new Box[dim][dim];
         for (int i = 0; i < dim; i++) {
@@ -59,7 +59,7 @@ public class Board
      * that we call undo() method because we are going to save an array (2d)
      * of the previous state
      */
-    public Board(Box[][] array)
+    public Board(final Box[][] array)
     {
         this.grid = new Box[array.length][array.length];
         for (int i = 0; i < array.length; i++) {
@@ -128,7 +128,16 @@ public class Board
      */
     private void rotateRight()
     {
-        // TODO
+        // sofar method should only work when grid is squared
+        // TODO for non-square implementation would be to assign a new Box[][] 
+        final Box[][] oldBoard = copyBoxArray(grid);
+        // loop over rows
+        for (int j = 0; j < grid.length; j++) {
+            // loop over columns
+            for (int i = 0; i < grid[0].length; i++) {
+                grid[i][j] = new Box(oldBoard[j][i].getValue(), i, j);
+            }
+        }
     }
     
     
@@ -144,7 +153,7 @@ public class Board
         // TODO fix the randomSpawnBox that it is only called when we were able to move/merge
         // move the whole board to the right, then merge, then move again to fill holes
         // then randomly spawn a new box in an empty slot
-        Box[][] oldBoard = copyBoxArray(grid);
+        final Box[][] oldBoard = copyBoxArray(grid);
         moveRight();
         mergeRight();
         moveRight();
@@ -157,7 +166,7 @@ public class Board
     /**
      * Method to copy a given Box array to a new Box array.
      */
-    private Box[][] copyBoxArray(Box[][] oldBoard)
+    private Box[][] copyBoxArray(final Box[][] oldBoard)
     {
         Box[][] newBoard = new Box[oldBoard.length][oldBoard[0].length];
         for (int i = 0; i < oldBoard.length; i++) {
@@ -181,8 +190,8 @@ public class Board
                 // loop over rows
                 for (int j = 0; j < grid.length; j++) {
                     // now move when possible
-                    Box left = grid[j][i];
-                    Box right = grid[j][i + 1];
+                    final Box left = grid[j][i];
+                    final Box right = grid[j][i + 1];
                     if (right.getValue() == 0 && left.getValue() != 0) {
                         grid[j][i + 1] = new Box(left.getValue(), j, i + 1);
                         // replacing it with empty cell such that next can also move
@@ -205,8 +214,8 @@ public class Board
             // loop over rows
             for (int j = 0; j < grid.length; j++) {
                 // now move when possible
-                Box left = grid[j][i - 1];
-                Box right = grid[j][i];
+                final Box left = grid[j][i - 1];
+                final Box right = grid[j][i];
                 if (grid[j][i - 1].canMerge(grid[j][i])) {
                     grid[j][i] = grid[j][i-1].merge(grid[j][i]);
                     grid[j][i - 1] = new Box(0, j, i - 1);
@@ -220,7 +229,7 @@ public class Board
      * 
      */
     private void randomSpawnBox() {
-        ArrayList<Box> emptyBoxes = emptyBoxPositions();
+        final ArrayList<Box> emptyBoxes = emptyBoxPositions();
         if (emptyBoxPositions().size() != 0) {
             randomGenerator();
         }
