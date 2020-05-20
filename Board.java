@@ -33,8 +33,8 @@ public class Board
             }
         }
         // call random generator
-        randomGenerator();
-        randomGenerator();
+        randomSpawnBox();
+        randomSpawnBox();
         // why does this not work:
         // this = new Board(SIZE);
     }
@@ -53,8 +53,8 @@ public class Board
             }
         }
         // call random generator
-        randomGenerator();
-        randomGenerator();
+        randomSpawnBox();
+        randomSpawnBox();
     }
     
     /**
@@ -236,17 +236,6 @@ public class Board
         }
     }
     
-    /**
-     * Spawns a box in a random location.
-     * 
-     */
-    private void randomSpawnBox() {
-        final ArrayList<Box> emptyBoxes = emptyBoxPositions();
-        if (emptyBoxPositions().size() != 0) {
-            randomGenerator();
-        }
-    }
-    
     
     /**
      * Method that swipes right the current configuration 
@@ -367,7 +356,7 @@ public class Board
      * Spawns a new box in the grid at a random location with value 2.
      *
      */
-    public void randomGenerator()
+    public void randomSpawnBox()
     {   
         ArrayList<Box> availPositions = this.emptyBoxPositions();
         if (!availPositions.isEmpty()) {
