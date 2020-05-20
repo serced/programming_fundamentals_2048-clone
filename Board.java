@@ -322,10 +322,8 @@ public class Board
             int randomPosition = (int) (Math.random() * availPositions.size());
             Box temp = availPositions.get(randomPosition);
             grid[temp.getRow()][temp.getColumn()] = new Box(2, temp.getRow(),temp.getColumn());
-            //return new Box(2, temp.getRow(),temp.getColumn());
 	}
-        // somehow we should generate over these positions randomly a new box of 2
-        // return null; //we have to return this?
+
     }
     
     public Box[][] getState() {
