@@ -122,8 +122,9 @@ public class BoardTest
     
     
     @Test
-    public void testRotateRight() {
-        // check whether at any column position, swipe right will go to most right column
+    public void testRotateRightWithSwipeUp() {
+        // check whether at any column position 
+        // at lowest row swipe up will go to most upper column
         grid[3][0] = new Box(1,3,0);
         grid[3][1] = new Box(2,3,1);
         grid[3][2] = new Box(3,3,2);
@@ -133,9 +134,20 @@ public class BoardTest
         game.swipeUp();
         Box[][] state = game.getState();
         assertEquals(1, state[0][0].getValue());
+        assertEquals(0, state[0][0].getRow());
+        assertEquals(0, state[0][0].getColumn());
+        
         assertEquals(2, state[0][1].getValue());
+        assertEquals(0, state[0][1].getRow());
+        assertEquals(1, state[0][1].getColumn());
+        
         assertEquals(3, state[0][2].getValue());
+        assertEquals(0, state[0][2].getRow());
+        assertEquals(2, state[0][2].getColumn());
+        
         assertEquals(4, state[0][3].getValue());
+        assertEquals(0, state[0][3].getRow());
+        assertEquals(3, state[0][3].getColumn());
         
         assertEquals(5, game.filledBoxPositions().size());
         assertEquals(11, game.emptyBoxPositions().size());

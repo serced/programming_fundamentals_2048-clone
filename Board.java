@@ -135,7 +135,8 @@ public class Board
         for (int j = 0; j < grid.length; j++) {
             // loop over columns
             for (int i = 0; i < grid[0].length; i++) {
-                grid[i][j] = new Box(oldBoard[j][i].getValue(), i, j);
+                final int newColumn = grid[0].length - 1 - j;
+                grid[i][newColumn] = new Box(oldBoard[j][i].getValue(), i, newColumn);
             }
         }
     }
