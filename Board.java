@@ -214,7 +214,7 @@ public class Board
         for (int i = grid[0].length - 1; i > 0; i--) {
             // loop over rows
             for (int j = 0; j < grid.length; j++) {
-                // now move when possible
+                // now merge when possible
                 final Box left = grid[j][i - 1];
                 final Box right = grid[j][i];
                 if (grid[j][i - 1].canMerge(grid[j][i])) {
@@ -261,12 +261,56 @@ public class Board
     }
     
     /**
-     * When the board can't be moved in the input direction, don't do anything
+     * Checks whether the game is over or there are still possible moves.
      * 
+     * @return true if the game is over, false otherwise
      */
-    public void isValidMove()
+    public boolean isGameOver()
     {
         // TODO
+        // check whether there are empty boxes
+        if (emptyBoxPositions().size() > 0) {
+            return false;
+        }
+        // check whether one could swipe in one direction (move or merge)
+        final Box[][] currentBoard = getState();
+        boolean gameOver = true;
+        for (int i = 0; i < SwipeDirection.values().length; i++) {
+            swipeToDirection(SwipeDirection.values()[i]);
+            // grid will be a possible future Board
+            // if grid == currentBoard return True
+            if (!areBoxArraysEqual(currentBoard, grid)) {
+                grid = copyBoxArray(currentBoard);
+                gameOver = false;
+            }
+            // else reset board and go to next direction
+            grid = copyBoxArray(currentBoard);
+        }
+        return gameOver;
+    }
+    
+    
+    /**
+     * Method to check whether two box arrays are equal.
+     * 
+     * @return True if the given box arrays are equal
+     */
+    private boolean areBoxArraysEqual(final Box[][] currentBoard, 
+        final Box[][] futureBoard)
+    {
+        for (int i = 0; i < currentBoard.length; i++) {
+            for (int j = 0; j < currentBoard[0].length; j++) {
+                // not sure if the second/third conditions add value
+                // theoretically they should be the same already
+                // currentBoard[i][j].isEqual(futureBoard[i][j]);
+                if (currentBoard[i][j].getValue() != futureBoard[i][j].getValue() 
+                    && currentBoard[i][j].getRow() == futureBoard[i][j].getRow()
+                    && currentBoard[i][j].getColumn() == futureBoard[i][j].getColumn()) {
+                        return false;
+                }
+            }
+        }
+        return true;
     }
     
     /**
@@ -312,8 +356,6 @@ public class Board
      * Returns a new block within the grid in a position, 
      * that is valid (there has not block bigger than 0)
      *
-     * @return  a boolean value that corresponds 
-       *          to the existence of equality
      */
     public void randomGenerator()
     {   
@@ -322,8 +364,7 @@ public class Board
             int randomPosition = (int) (Math.random() * availPositions.size());
             Box temp = availPositions.get(randomPosition);
             grid[temp.getRow()][temp.getColumn()] = new Box(2, temp.getRow(),temp.getColumn());
-	}
-
+        }
     }
     
     public Box[][] getState() {

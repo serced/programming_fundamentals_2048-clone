@@ -173,4 +173,56 @@ public class BoardTest
         assertEquals(5, game.filledBoxPositions().size());
         assertEquals(11, game.emptyBoxPositions().size());
     }
+    
+    @Test
+    public void testIsGameOverTrue() {
+        int value = 1;
+        for (int j = 0; j < grid.length; j++) {
+            for (int i = 0; i < grid[0].length; i++) {
+                grid[j][i] = new Box(value, i, j);
+                value++;
+            }
+        }
+    
+        Board game = new Board(grid);
+        
+        assertEquals(16, game.filledBoxPositions().size());
+        assertEquals(0, game.emptyBoxPositions().size());
+        assertEquals(true, game.isGameOver());
+    }
+    
+    @Test
+    public void testIsGameOverFalseBoardNotFull() {
+        int value = 0; // equivalent to the first box being empty
+        for (int j = 0; j < grid.length; j++) {
+            for (int i = 0; i < grid[0].length; i++) {
+                grid[j][i] = new Box(value, i, j);
+                value++;
+            }
+        }
+    
+        Board game = new Board(grid);
+        
+        assertEquals(15, game.filledBoxPositions().size());
+        assertEquals(1, game.emptyBoxPositions().size());
+        assertEquals(false, game.isGameOver());
+    }
+    
+    @Test
+    public void testIsGameOverFalseMergePossible() {
+        int value = 2;
+        for (int j = 0; j < grid.length; j++) {
+            for (int i = 0; i < grid[0].length; i++) {
+                grid[j][i] = new Box(value, i, j);
+            }
+            value = value + 2;
+        }
+    
+        Board game = new Board(grid);
+        
+        Box[][] state = game.getState();
+        assertEquals(16, game.filledBoxPositions().size());
+        assertEquals(0, game.emptyBoxPositions().size());
+        assertEquals(false, game.isGameOver());
+    }
 }
