@@ -1,9 +1,9 @@
 
 /**
- * Enumeration class SwipeDirection - write a description of the enum class here
+ * Contains all possible directions in which we can swipe.
  *
- * @author (your name here)
- * @version (version number or date here)
+ * @author Maria Kolyvaki and Severin Husmann
+ * @version 20.05.2020
  */
 public enum SwipeDirection
 {

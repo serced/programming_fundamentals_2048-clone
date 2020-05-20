@@ -4,8 +4,8 @@
  * box of our Game grid. Basically the entries of our Grid, which is going to 
  * be a 2-dimensional array, are going to be of Class type Box.
  * 
- * @ Author Maria Kolyvaki and Severin Husmann
- * @ version 1
+ * @author Maria Kolyvaki and Severin Husmann
+ * @version 20.05.2020
  */
 public class Box
 {
@@ -15,7 +15,11 @@ public class Box
     private int column;
     
     /**
-     * Constructor for objects of class Block
+     * Constructor for objects of class Block.
+     * 
+     * @param value The value of the box that should be created
+     * @param row The row of where the box will be stored in the boxArray
+     * @param column The column of where the box will be stored in the boxArray
      */
     public Box(int value, int row, int column)
     {
@@ -24,18 +28,9 @@ public class Box
         this.row = row;
         this.column = column;
     }
-    
-    /**
-     * Constructor for objects of class Block
-     */
-    public Box(int init)
-    {
-        // initialise instance variables
-        this.value = init;
-    }
 
     /**
-     * Returns the value field of the Box
+     * Returns the value field of the Box.
      *
      * @return  an integer representing the value
      */
@@ -45,7 +40,7 @@ public class Box
     }
     
     /**
-     * Returns the row field of the Box
+     * Returns the row field of the Box.
      *
      * @return  an integer representing the row
      */
@@ -55,7 +50,7 @@ public class Box
     }
     
     /**
-     * Returns the column field of the Box
+     * Returns the column field of the Box.
      *
      * @return  an integer representing the column
      */
@@ -79,9 +74,11 @@ public class Box
     }
     
     /**
-     * Check whether In case that 2 consecutive boxes are equal either in a row
-     * or a collumn 
+     * Check whether two boxes are equal either in a row
+     * or a column.
      * 
+     * @param other The other box with which we want 
+     *      to compare whether it can be merged.
      * @return true if they can be merged
      */
     public boolean canMerge(final Box other)
@@ -90,11 +87,12 @@ public class Box
     }
     
     /**
-     * Merges two boxes 
+     * Doubles the value of the current box if it can be merged with the other one.
      *
      * @param  other  the other box
+     * @return Returns the current box from which we doubled the value.
      */
-    public Box merge(final Box other){
+    public Box merge(final Box other) {
         if (this.canMerge(other)) {
             this.value += other.value;
             return this;

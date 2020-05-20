@@ -1,14 +1,16 @@
-import java.util.Random;
-import java.util.LinkedList;
 import java.util.ArrayList;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Random;
+
 /**
  * This class should contain the main grid of our Game and 
  * all the methods that handle a specific
  * box of our Game grid. Basically the entries of our Grid, which is going to 
  * be a 2-dimensional array, are going to be of Class type Box.
  * 
- * @ Author Maria Kolyvaki and Severin Husmann
- * @ version 16.05.2020
+ * @author Maria Kolyvaki and Severin Husmann
+ * @version 20.05.2020
  */
 public class Board
 {
@@ -39,6 +41,8 @@ public class Board
     
     /**
      * Constructor for objects of class Board.
+     * 
+     * @param dim the square dimensions for a new Board object
      */
     public Board(final int dim)
     {
@@ -57,7 +61,9 @@ public class Board
      * Constructor that creates a board from a 2-dimensional array.
      * Maybe we want this method for contsucting the board again in case
      * that we call undo() method because we are going to save an array (2d)
-     * of the previous state
+     * of the previous state.
+     * 
+     * @param array A grid array from which we can initialize our game with.
      */
     public Board(final Box[][] array)
     {
@@ -70,19 +76,21 @@ public class Board
     }
   
     /**
-     * Method that refreshes the Game to its initial position
-     * where we have 
+     * Method that refreshes the Game to its initial position.
      *
+     * @return Returns a new board.
      */
     public Board refresh()
     {
+        // TODO 
+        // this method should probably just create a new game?
         return new Board(SIZE);
         // call the random generator here
     }
     
     /**
      * Method that swipes up the current configuration 
-     * of the Game
+     * of the Game.
      * 
      */
     public void swipeUp()
@@ -96,7 +104,7 @@ public class Board
     
     /**
      * Method that swipes down the current configuration 
-     * of the Game
+     * of the Game.
      * 
      */
     public void swipeDown()
@@ -110,7 +118,7 @@ public class Board
     
     /**
      * Method that swipes left the current configuration 
-     * of the Game
+     * of the Game.
      * 
      */
     public void swipeLeft()
@@ -123,7 +131,7 @@ public class Board
     }
     
     /**
-     * Method that rotates the grid right by 90 degrees
+     * Method that rotates the grid right by 90 degrees.
      * 
      */
     private void rotateRight()
@@ -145,7 +153,7 @@ public class Board
     
     /**
      * Method that swipes right the current configuration 
-     * of the Game
+     * of the Game.
      * 
      */
     public void swipeRight()
@@ -166,6 +174,9 @@ public class Board
     
     /**
      * Method to copy a given Box array to a new Box array.
+     * 
+     * @param oldBoard a box array that we want to copy
+     * @return a copied box array
      */
     private Box[][] copyBoxArray(final Box[][] oldBoard)
     {
@@ -218,7 +229,7 @@ public class Board
                 final Box left = grid[j][i - 1];
                 final Box right = grid[j][i];
                 if (grid[j][i - 1].canMerge(grid[j][i])) {
-                    grid[j][i] = grid[j][i-1].merge(grid[j][i]);
+                    grid[j][i] = grid[j][i - 1].merge(grid[j][i]);
                     grid[j][i - 1] = new Box(0, j, i - 1);
                 }
             }
@@ -239,7 +250,9 @@ public class Board
     
     /**
      * Method that swipes right the current configuration 
-     * of the Game
+     * of the Game.
+     * 
+     * @param direction The direction in which we want to swipe the board.
      * 
      */
     public void swipeToDirection(SwipeDirection direction)
@@ -303,10 +316,8 @@ public class Board
                 // not sure if the second/third conditions add value
                 // theoretically they should be the same already
                 // currentBoard[i][j].isEqual(futureBoard[i][j]);
-                if (currentBoard[i][j].getValue() != futureBoard[i][j].getValue() 
-                    && currentBoard[i][j].getRow() == futureBoard[i][j].getRow()
-                    && currentBoard[i][j].getColumn() == futureBoard[i][j].getColumn()) {
-                        return false;
+                if (currentBoard[i][j].getValue() != futureBoard[i][j].getValue()) {
+                    return false;
                 }
             }
         }
@@ -315,7 +326,7 @@ public class Board
     
     /**
      * Method that returns a list consisting of the 
-     * points of the grid that are empty
+     * points of the grid that are empty.
      *
      * @return the list of Boxes
      */
@@ -334,7 +345,7 @@ public class Board
        
     /**
      * Method that returns a list consisting of the 
-     * points of the grid that are filled
+     * points of the grid that are filled.
      *
      * @return the list of Boxes
      */
@@ -353,8 +364,7 @@ public class Board
    
     
     /**
-     * Returns a new block within the grid in a position, 
-     * that is valid (there has not block bigger than 0)
+     * Spawns a new box in the grid at a random location with value 2.
      *
      */
     public void randomGenerator()
@@ -367,6 +377,11 @@ public class Board
         }
     }
     
+    /**
+     * Method that gives the current state of the game.
+     * 
+     * @return Returns the current box array grid representing the current state
+     */
     public Box[][] getState() {
         return grid;
     }

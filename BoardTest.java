@@ -37,6 +37,25 @@ public class BoardTest
     }
     
     @Test
+    public void testRandomGeneratorFullGrid() {
+        // TODO
+        /* something like this
+        int value = 1;
+        for (int j = 0; j < grid.length; j++) {
+            for (int i = 0; i < grid[0].length; i++) {
+                grid[j][i] = new Box(value, i, j);
+                value++;
+            }
+        }
+    
+        Board game = new Board(grid);
+        
+        assertEquals(0, game.emptyBoxPositions().size());
+        assertEquals(true, game.isGameOver());
+        */
+    }
+    
+    @Test
     public void testSwipeRightOneValuePerRow() {
         // check whether at any column position, swipe right will go to most right column
         grid[0][0] = new Box(2,0,0);
