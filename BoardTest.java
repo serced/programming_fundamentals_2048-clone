@@ -21,26 +21,12 @@ public class BoardTest
     @Before
     public void setUp()
     {
-        // first row
-        grid[0][0] = new Box(0,0,0);
-        grid[0][1] = new Box(0,0,1);
-        grid[0][2] = new Box(0,0,2);
-        grid[0][3] = new Box(0,0,3);
-        // second row
-        grid[1][0] = new Box(0,1,0);
-        grid[1][1] = new Box(0,1,1);
-        grid[1][2] = new Box(0,1,2);
-        grid[1][3] = new Box(0,1,3);
-        // third row
-        grid[2][0] = new Box(0,2,0);
-        grid[2][1] = new Box(0,2,1);
-        grid[2][2] = new Box(0,2,2);
-        grid[2][3] = new Box(0,2,3);
-        // fourth row
-        grid[3][0] = new Box(0,3,0);
-        grid[3][1] = new Box(0,3,1);
-        grid[3][2] = new Box(0,3,2);
-        grid[3][3] = new Box(0,3,3);
+        grid = new Box[4][4];
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                grid[i][j] = new Box(0,i,j);
+            }
+        }
     }
     
     @Test
@@ -146,6 +132,41 @@ public class BoardTest
         assertEquals(2, state[0][2].getColumn());
         
         assertEquals(4, state[0][3].getValue());
+        assertEquals(0, state[0][3].getRow());
+        assertEquals(3, state[0][3].getColumn());
+        
+        assertEquals(5, game.filledBoxPositions().size());
+        assertEquals(11, game.emptyBoxPositions().size());
+    }
+    
+    @Test
+    public void testSwipeUpWithMerge() {
+        grid[0][0] = new Box(2,0,0);
+        grid[0][1] = new Box(2,0,1);
+        grid[0][2] = new Box(4,0,2);
+        grid[0][3] = new Box(4,0,3);
+        
+        grid[3][0] = new Box(2,3,0);
+        grid[2][1] = new Box(2,2,1);
+        grid[1][2] = new Box(4,1,2);
+        grid[3][3] = new Box(4,3,3);
+        
+        Board game = new Board(grid);
+        game.swipeUp();
+        Box[][] state = game.getState();
+        assertEquals(4, state[0][0].getValue());
+        assertEquals(0, state[0][0].getRow());
+        assertEquals(0, state[0][0].getColumn());
+        
+        assertEquals(4, state[0][1].getValue());
+        assertEquals(0, state[0][1].getRow());
+        assertEquals(1, state[0][1].getColumn());
+        
+        assertEquals(8, state[0][2].getValue());
+        assertEquals(0, state[0][2].getRow());
+        assertEquals(2, state[0][2].getColumn());
+        
+        assertEquals(8, state[0][3].getValue());
         assertEquals(0, state[0][3].getRow());
         assertEquals(3, state[0][3].getColumn());
         
