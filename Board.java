@@ -2,7 +2,8 @@ import java.util.ArrayList;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
-
+import java.util.Objects; 
+import java.util.Arrays; 
 /**
  * This class should contain the main grid of our Game and 
  * all the methods that handle a specific
@@ -85,7 +86,6 @@ public class Board
         // TODO 
         // this method should probably just create a new game?
         return new Board(SIZE);
-        // call the random generator here
     }
     
     /**
@@ -278,6 +278,7 @@ public class Board
         final Box[][] currentBoard = getState();
         boolean gameOver = true;
         for (int i = 0; i < SwipeDirection.values().length; i++) {
+            
             swipeToDirection(SwipeDirection.values()[i]);
             // grid will be a possible future Board
             // if grid == currentBoard return True

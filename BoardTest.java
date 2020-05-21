@@ -2,7 +2,7 @@ import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
+import java.util.Objects;
 /**
  * The test class BoardTest.
  *
@@ -12,6 +12,7 @@ import org.junit.Test;
 public class BoardTest
 {
     Box[][] grid = new Box[4][4];
+    Box[][] grid1 = new Box[4][4];
     
     /**
      * Sets up the test fixture.
