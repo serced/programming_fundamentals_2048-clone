@@ -1,3 +1,4 @@
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
@@ -51,6 +52,7 @@ public class GUI2048 extends JFrame {
         JPanel panelButtons = new JPanel();
         panelMain.add(panelButtons);
         panelButtons.setBackground(Color.ORANGE);  
+        //panelButtons.setPreferredSize(new Dimension(100, 100));
         panelButtons.add(refresh);
         panelButtons.add(right);
         panelButtons.add(left);
