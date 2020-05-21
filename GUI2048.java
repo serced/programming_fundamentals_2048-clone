@@ -21,6 +21,7 @@ import java.awt.event.KeyListener;
 public class GUI2048 extends JFrame {
 
     private final Model model;
+    JPanel panelMain;
     
     /**
      * Create a new GUI operating on the given Model.
@@ -28,19 +29,30 @@ public class GUI2048 extends JFrame {
      */
     public GUI2048(final Model model) {
         this.model = model;
-        JPanel panel = new JPanel() ;
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        
+        JPanel panelMain = new JPanel();
+        panelMain.setBackground(Color.ORANGE);  
+        frame.add(panelMain);
+        
+        frame.pack();
+        JPanel panelGame = new JPanel();
+        panelMain.add(panelGame);
+        
         JButton refresh = new JButton("↺");
         JButton right = new JButton("→");
         JButton left = new JButton("←");
         JButton up = new JButton("↑");
         JButton down = new JButton("↓");
-        this.add(refresh);
-        this.add(right);
-        this.add(left);
-        this.add(up);
-        this.add(down);
+        panelGame.add(refresh);
+        panelGame.add(right);
+        panelGame.add(left);
+        panelGame.add(up);
+        panelGame.add(down);
         pack();
-        setVisible(true);
+        frame.setVisible(true);
         
         refresh.addActionListener(new RefreshListener() {
             public void actionPerformed(ActionEvent ev) {
