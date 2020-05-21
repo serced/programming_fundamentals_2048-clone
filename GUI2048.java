@@ -1,4 +1,3 @@
-
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
@@ -13,23 +12,24 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
 /**
- * Write a description of class GraphicalUserInterface here.
+ * This class implements the GUI of the 2048 game implemented in the Board Class.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Maria Kolyvaki and Severin
+ * @version 20.05.2020
  */
 public class GUI2048 extends JFrame {
 
-    //private final Model model;
+    private final Board game;
     private JPanel panelMain;
     private JPanel panelGame;
     /**
      * Create a new GUI operating on the given Model.
      * @param model The model of this application
      */
-    public GUI2048(/*final Model model*/) {
-        //this.model = model;
+    public GUI2048(final Board game) {
+        this.game = game;
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
@@ -52,47 +52,58 @@ public class GUI2048 extends JFrame {
         JPanel panelButtons = new JPanel();
         panelMain.add(panelButtons);
         panelButtons.setBackground(Color.ORANGE);  
+
+        
+        panelGame.setLayout(new GridLayout(4, 4));
+        final Box[][] gameGrid = game.getState();
+        for (int i = 0; i < gameGrid.length; i++) {
+            for (int j = 0; j < gameGrid[0].length; j++) {
+                if (gameGrid[i][j].getValue() != 0) {
+                    panelGame.add(new JLabel(Integer.toString(gameGrid[i][j].getValue())));
+                } else {
+                    panelGame.add(new JLabel(""));
+                }
+                
+            }
+        }
+
+
+
+        refresh.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+                System.out.println("Refresh clicked");
+            }
+        });
+        right.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+                System.out.println("right clicked");
+                game.swipeRight();
+            }
+        });
+        left.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+                game.swipeLeft();
+            }
+        });
+        up.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+                game.swipeUp();
+            }
+        });
+        down.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+                game.swipeDown();
+            }
+        }); 
+        
         //panelButtons.setPreferredSize(new Dimension(100, 100));
         panelButtons.add(refresh);
         panelButtons.add(right);
         panelButtons.add(left);
         panelButtons.add(up);
         panelButtons.add(down);
-        
-        panelGame.setLayout(new GridLayout(4, 4));
-        for (int i = 0; i < 16; i++) {
-            panelGame.add(new JLabel("check"));
-        }
         frame.pack();
         frame.setVisible(true);
-
-        refresh.addActionListener(new RefreshListener() {
-            public void actionPerformed(ActionEvent ev) {
-                System.out.println("Refresh clicked");
-            }
-        });
-        right.addActionListener(new RightListener() {
-            public void actionPerformed(ActionEvent ev) {
-                System.out.println("right swipe clicked");
-            }
-        });
-        left.addActionListener(new LeftListener() {
-            public void actionPerformed(ActionEvent ev) {
-                System.out.println("left swipe clicked");
-            }
-        });
-        up.addActionListener(new UpListener() {
-            public void actionPerformed(ActionEvent ev) {
-                System.out.println("up swipe clicked");
-            }
-        });
-        down.addActionListener(new DownListener() {
-            public void actionPerformed(ActionEvent ev) {
-                System.out.println("down swipe clicked");
-            }
-        });
-            
-            
     }
     
 }
