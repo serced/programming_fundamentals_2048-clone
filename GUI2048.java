@@ -30,6 +30,9 @@ public class GUI2048 extends JFrame {
      */
     public GUI2048(final Board game) {
         this.game = game;
+        
+        
+        
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
@@ -57,7 +60,7 @@ public class GUI2048 extends JFrame {
         
         
         //panelGame.setLayout(new GridLayout(4, 4));
-        final Box[][] gameGrid = game.getState();
+        /*final Box[][] gameGrid = game.getState();
         for (int i = 0; i < gameGrid.length; i++) {
             for (int j = 0; j < gameGrid[0].length; j++) {
                 if (gameGrid[i][j].getValue() != 0) {
@@ -67,7 +70,7 @@ public class GUI2048 extends JFrame {
                 }
                 
             }
-        }
+        }*/
 
 
 

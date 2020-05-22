@@ -1,16 +1,15 @@
-    import javax.swing.JComponent;
-    import java.awt.Font;
-    import java.awt.Dimension;
-    import java.awt.Graphics;
-    import java.awt.Color;
-    /**
-    * Write a description of class SquaredModel here.
-    *
-    * @author (your name)
-    * @version (a version number or a date)
-    */
-    public class SquaredModel extends JComponent
-    {
+import javax.swing.JComponent;
+import java.awt.Font;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Color;
+/**
+* Write a description of class SquaredModel here.
+*
+* @author (your name)
+* @version (a version number or a date)
+*/
+public class SquaredModel extends JComponent {
     // instance variables 
     static int SCALE = 100;
     static int BORDER = SCALE / 20; 

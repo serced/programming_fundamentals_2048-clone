@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Objects; 
@@ -15,11 +14,9 @@ import java.util.Arrays;
  */
 public class Board
 {
-    // instance variables - replace the example below with your own
-    
     private static final int SIZE = 4;
     private Box[][] grid;
-    private SwipeDirection direction;
+    private ArrayList<BoardListener> listeners;
     
     /**
      * Constructor for objects of class Board.
@@ -27,6 +24,7 @@ public class Board
     public Board()
     {
         // initialise instance variables
+        listeners = new ArrayList<>();
         grid = new Box[SIZE][SIZE];
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
@@ -47,6 +45,7 @@ public class Board
      */
     public Board(final int dim)
     {
+        listeners = new ArrayList<>();
         grid = new Box[dim][dim];
         for (int i = 0; i < dim; i++) {
             for (int j = 0; j < dim; j++) {
@@ -68,6 +67,7 @@ public class Board
      */
     public Board(final Box[][] array)
     {
+        listeners = new ArrayList<>();
         this.grid = new Box[array.length][array.length];
         for (int i = 0; i < array.length; i++) {
             for (int j = 0; j < array[0].length; j++) {
@@ -75,18 +75,7 @@ public class Board
             }
         }
     }
-  
-    /**
-     * Method that refreshes the Game to its initial position.
-     *
-     * @return Returns a new board.
-     */
-    public Board refresh()
-    {
-        // TODO 
-        // this method should probably just create a new game?
-        return new Board(SIZE);
-    }
+
     
     /**
      * Method that swipes up the current configuration 
@@ -169,6 +158,7 @@ public class Board
         // can we spawn only when oldBoard is not equal anymore?
         if (!areBoxArraysEqual(this.grid, oldBoard)) {
             randomSpawnBox();
+            fireBoardChanged();
         }
     }
     
@@ -269,7 +259,6 @@ public class Board
      */
     public boolean isGameOver()
     {
-        // TODO
         // check whether there are empty boxes
         if (!emptyBoxPositions().isEmpty()) {
             return false;
@@ -376,6 +365,17 @@ public class Board
      */
     public Box[][] getState() {
         return grid;
+    }
+    
+    public void addBoardListener(BoardListener li) {
+        listeners.add(li);
+    }
+    
+    
+    private void fireBoardChanged() {
+        for (BoardListener li : listeners) {
+            li.boardChanged(this);
+        }
     }
     
 }
