@@ -46,12 +46,11 @@ public class BoxUI extends JComponent {
             
             g.drawString(Integer.toString(game.getState()[row][column].getValue()), 
                 centerWidth, centerHeight);
+                
         } else {
             // otherwise paint a gray box
             g.setColor(Color.GRAY);
             g.fillRoundRect(0, 0, getWidth(), getHeight(), 25, 25);
-            final int centerWidth = getWidth() / 2;
-            final int centerHeight = getHeight() / 2;
         }
     }
 

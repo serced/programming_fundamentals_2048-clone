@@ -24,6 +24,7 @@ public class MainFrame extends JFrame {
     public MainFrame(final Board game) {
         // initialize instance variables
         this.game = game;
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         // setup of game board GUI in the center
         GameSquare gameSquare = new GameSquare(game);
