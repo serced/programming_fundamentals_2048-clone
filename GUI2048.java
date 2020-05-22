@@ -37,10 +37,12 @@ public class GUI2048 extends JFrame {
         JPanel panelMain = new JPanel();
         panelMain.setBackground(Color.ORANGE);  
         frame.add(panelMain);
-        
         BoxLayout box = new BoxLayout(panelMain, BoxLayout.Y_AXIS);
         panelMain.setLayout(box);
-        JPanel panelGame = new JPanel();
+        //new
+        GamePanel panelGame = new GamePanel(4);
+        //new
+        panelGame.add(new SquaredModel(16));
         panelMain.add(panelGame);
         panelMain.setPreferredSize(new Dimension(400, 400));
         JButton refresh = new JButton("↺");
@@ -52,9 +54,9 @@ public class GUI2048 extends JFrame {
         JPanel panelButtons = new JPanel();
         panelMain.add(panelButtons);
         panelButtons.setBackground(Color.ORANGE);  
-
         
-        panelGame.setLayout(new GridLayout(4, 4));
+        
+        //panelGame.setLayout(new GridLayout(4, 4));
         final Box[][] gameGrid = game.getState();
         for (int i = 0; i < gameGrid.length; i++) {
             for (int j = 0; j < gameGrid[0].length; j++) {
