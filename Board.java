@@ -3,6 +3,7 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.Objects; 
 import java.util.Arrays; 
+import java.util.Stack;
 /**
  * This class should contain the main grid of our Game and 
  * all the methods that handle a specific
@@ -16,6 +17,7 @@ public class Board
 {
     private static final int SIZE = 4;
     private Box[][] grid;
+    private Stack<Box[][]> savedGrids;
     private ArrayList<BoardListener> listeners;
     
     /**
@@ -84,6 +86,7 @@ public class Board
      */
     public void swipeUp()
     {
+        //savedGrids.add(this.grid);
         rotateRight();
         swipeRight();
         rotateRight();
@@ -98,6 +101,7 @@ public class Board
      */
     public void swipeDown()
     {
+        //savedGrids.add(this.grid);
         rotateRight();
         rotateRight();
         rotateRight();
@@ -112,6 +116,7 @@ public class Board
      */
     public void swipeLeft()
     {
+        //savedGrids.add(this.grid);
         rotateRight();
         rotateRight();
         swipeRight();
@@ -177,6 +182,18 @@ public class Board
             }
         }
         return newBoard;
+    }
+    
+    /**
+     * Method to reverse the Game one step back.
+     * 
+     */
+    public void undo()
+    {
+        if(savedGrids.size() > 1) {
+            savedGrids.pop();
+            Box[][] previousBoard = savedGrids.pop();
+        }
     }
     
     /**
@@ -285,7 +302,7 @@ public class Board
     /**
      * Method to check whether two box arrays are equal.
      * 
-     * @return True if the given box arrays are equal
+     * @return true if the given box arrays are equal
      */
     private boolean areBoxArraysEqual(final Box[][] currentBoard, 
         final Box[][] futureBoard)

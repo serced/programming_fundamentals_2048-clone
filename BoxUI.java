@@ -6,6 +6,10 @@ import java.awt.Graphics;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.geom.Rectangle2D;
 
 /**
  * Write a description of class BoxUI here.
@@ -46,12 +50,17 @@ public class BoxUI extends JComponent {
             
             g.drawString(Integer.toString(game.getState()[row][column].getValue()), 
                 centerWidth, centerHeight);
-                
+            
         } else {
             // otherwise paint a gray box
-            g.setColor(Color.GRAY);
+            g.setColor(Color.LIGHT_GRAY);
             g.fillRoundRect(0, 0, getWidth(), getHeight(), 25, 25);
+            if (game.isGameOver() == true ) {
+                g.setColor(Color.BLACK);
+                
+            }
         }
     }
-
+        
 }
+

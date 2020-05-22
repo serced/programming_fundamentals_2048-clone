@@ -10,6 +10,7 @@ import java.awt.event.*;
 import java.util.Random;
 import javax.swing.*;
 
+
 /**
  * This class implements the mainframe of the 2048 game implemented in the Board Class.
  *
@@ -49,12 +50,11 @@ public class MainFrame extends JFrame /*implements KeyListener*/{
         this.pack();
         
         
-        
         // register listeners to corresponding buttons
         refresh.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 System.out.println("Refresh clicked");
-                
+                //game.undo();
             }
         });
         right.addActionListener(new ActionListener() {
