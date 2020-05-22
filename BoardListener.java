@@ -7,7 +7,7 @@
  */
 public interface BoardListener {
     /**
-     * An example of a method header - replace this comment with your own
+     * An example of a method header.
      *
      * @param  game the board which is used to play the game
      */

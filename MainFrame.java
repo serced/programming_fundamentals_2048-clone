@@ -1,11 +1,14 @@
-
+import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
+import java.awt.*;
+import java.awt.event.*;
+import java.util.Random;
+import javax.swing.*;
 
 /**
  * This class implements the mainframe of the 2048 game implemented in the Board Class.
@@ -13,8 +16,8 @@ import javax.swing.JPanel;
  * @author Maria Kolyvaki and Severin
  * @version 20.05.2020
  */
-public class MainFrame extends JFrame {
-
+public class MainFrame extends JFrame /*implements KeyListener*/{
+    
     private final Board game;
 
     /**
@@ -45,10 +48,13 @@ public class MainFrame extends JFrame {
         this.add(buttons, BorderLayout.SOUTH);
         this.pack();
         
+        
+        
         // register listeners to corresponding buttons
         refresh.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 System.out.println("Refresh clicked");
+                
             }
         });
         right.addActionListener(new ActionListener() {
@@ -72,8 +78,9 @@ public class MainFrame extends JFrame {
                 game.swipeDown();
             }
         }); 
-
+        
     }
+    
     
 }
 
