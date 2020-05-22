@@ -158,7 +158,6 @@ public class Board
      */
     public void swipeRight()
     {
-        // TODO check for game over
         // TODO fix the randomSpawnBox that it is only called when we were able to move/merge
         // move the whole board to the right, then merge, then move again to fill holes
         // then randomly spawn a new box in an empty slot
@@ -168,8 +167,9 @@ public class Board
         moveRight();
         // should only be called when we were actually able to move/merge!
         // can we spawn only when oldBoard is not equal anymore?
-        randomSpawnBox();
-        
+        if (!areBoxArraysEqual(this.grid, oldBoard)) {
+            randomSpawnBox();
+        }
     }
     
     /**
@@ -271,7 +271,7 @@ public class Board
     {
         // TODO
         // check whether there are empty boxes
-        if (emptyBoxPositions().size() > 0) {
+        if (!emptyBoxPositions().isEmpty()) {
             return false;
         }
         // check whether one could swipe in one direction (move or merge)
@@ -301,12 +301,14 @@ public class Board
     private boolean areBoxArraysEqual(final Box[][] currentBoard, 
         final Box[][] futureBoard)
     {
+        // TODO refactor to BoardHelper class as static method such that we hand
+        // in two boards as we do here
         for (int i = 0; i < currentBoard.length; i++) {
             for (int j = 0; j < currentBoard[0].length; j++) {
                 // not sure if the second/third conditions add value
                 // theoretically they should be the same already
-                // currentBoard[i][j].isEqual(futureBoard[i][j]);
-                if (currentBoard[i][j].getValue() != futureBoard[i][j].getValue()) {
+                //if (currentBoard[i][j].getValue() != futureBoard[i][j].getValue()) {
+                if (!currentBoard[i][j].equal(futureBoard[i][j])) {
                     return false;
                 }
             }

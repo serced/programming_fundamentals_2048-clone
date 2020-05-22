@@ -245,4 +245,6 @@ public class BoardTest
         assertEquals(0, game.emptyBoxPositions().size());
         assertEquals(false, game.isGameOver());
     }
+    
+    // TODO add test for spwaning box only when something changed
 }

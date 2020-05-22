@@ -42,7 +42,7 @@ public class GUI2048 extends JFrame {
         //new
         GamePanel panelGame = new GamePanel(4);
         //new
-        panelGame.add(new SquaredModel(16));
+        panelGame.add(new SquaredModel(4));
         panelMain.add(panelGame);
         panelMain.setPreferredSize(new Dimension(400, 400));
         JButton refresh = new JButton("↺");
@@ -63,7 +63,7 @@ public class GUI2048 extends JFrame {
                 if (gameGrid[i][j].getValue() != 0) {
                     panelGame.add(new JLabel(Integer.toString(gameGrid[i][j].getValue())));
                 } else {
-                    panelGame.add(new JLabel(""));
+                    panelGame.add(new JLabel("4"));
                 }
                 
             }
@@ -80,6 +80,7 @@ public class GUI2048 extends JFrame {
             public void actionPerformed(ActionEvent ev) {
                 System.out.println("right clicked");
                 game.swipeRight();
+                repaint();
             }
         });
         left.addActionListener(new ActionListener() {
