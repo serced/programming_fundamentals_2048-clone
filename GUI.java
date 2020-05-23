@@ -14,6 +14,7 @@ public class GUI
         
         // GUI
         final MainFrame f = new MainFrame(game);
+        // makes the rame visible, by default is invisible
         f.setVisible(true);
     }
 }

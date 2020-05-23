@@ -13,7 +13,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.*;
 import java.util.Random;
 import javax.swing.*;
-
+import java.awt.geom.Rectangle2D;
 
 /**
  * Write a description of class GameSquare here.
@@ -31,13 +31,14 @@ public class GameSquare extends JComponent {
     {
         super();
         this.game = game;
-        
+        // set the vertical and horizontal size of the frame
         this.setPreferredSize(new Dimension(400, 400));
         
         // set square layout of the squares
         this.setLayout(new GridLayout(4, 4, 5, 5));
         
         Box[][] gameGrid = game.getState();
+        // fill up the game with the corrsponding object of BoxUI type
         for (int i = 0; i < gameGrid.length; i++) {
             for (int j = 0; j < gameGrid[0].length; j++) {
                 final BoxUI box = new BoxUI(game, i, j);
@@ -54,6 +55,16 @@ public class GameSquare extends JComponent {
     public void paintComponent(final Graphics g) {
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, getWidth(), getHeight());
+        //final Painter painter = new Painter(g, 400);
+        if (game.isGameOver() == true ) {
+            System.out.println("Game Over mode");
+            g.setColor(Color.BLACK);
+            final Font font = new Font(Font.SANS_SERIF, Font.BOLD, 20);
+            final FontMetrics fm = g.getFontMetrics(font);
+            final Rectangle2D textsize = fm.getStringBounds("Game over", g);
+            g.drawString("Game over", 400, 400);
+            //TO DO, I get here but I cannot draw the text
+        }
     }
 
     private void registerKeyListener() {
@@ -88,7 +99,7 @@ public class GameSquare extends JComponent {
                             break;
                     }
                     repaint();
-                    //
+                    // we should call that instead of the paintComponent
                 }
             });
     }

@@ -28,6 +28,7 @@ public class MainFrame extends JFrame /*implements KeyListener*/{
     public MainFrame(final Board game) {
         // initialize instance variables
         this.game = game;
+        // operation performed when we close the frame 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         // setup of game board GUI in the center
