@@ -53,7 +53,7 @@ public class GameSquare extends JComponent {
     }
     
     public void paintComponent(final Graphics g) {
-        g.setColor(Color.WHITE);
+        g.setColor(new Color(0xBBADA0));
         g.fillRect(0, 0, getWidth(), getHeight());
         //final Painter painter = new Painter(g, 400);
         if (game.isGameOver() == true ) {

@@ -69,11 +69,7 @@ public class BoxUI extends JComponent {
             g.setColor(new Color(0xCDC1B4));
             // define the boundaries of the box that we want to fill
             g.fillRoundRect(0, 0, getWidth(), getHeight(), 25, 25);
-            if (game.isGameOver() == true ) {
-                g.setColor(Color.BLACK);
-                //g.drawString("Game over", 400, 400);
-                
-            }
+            
         }
     }
         
