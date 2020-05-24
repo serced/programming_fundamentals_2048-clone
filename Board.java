@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.Objects; 
 import java.util.Arrays; 
 import java.util.Stack;
+
 /**
  * This class should contain the main grid of our Game and 
  * all the methods that handle a specific
@@ -132,7 +133,7 @@ public class Board
     {
         // sofar method should only work when grid is squared
         // TODO for non-square implementation would be to assign a new Box[][] 
-        final Box[][] oldBoard = copyBoxArray(grid);
+        final Box[][] oldBoard = BoardHelper.copyBoxArray(grid);
         // loop over rows
         for (int j = 0; j < grid.length; j++) {
             // loop over columns
@@ -152,38 +153,19 @@ public class Board
      */
     public void swipeRight()
     {
-        // TODO fix the randomSpawnBox that it is only called when we were able to move/merge
         // move the whole board to the right, then merge, then move again to fill holes
         // then randomly spawn a new box in an empty slot
-        final Box[][] oldBoard = copyBoxArray(grid);
+        final Box[][] oldBoard = BoardHelper.copyBoxArray(grid);
         moveRight();
         mergeRight();
         moveRight();
         // should only be called when we were actually able to move/merge!
-        // can we spawn only when oldBoard is not equal anymore?
-        if (!areBoxArraysEqual(this.grid, oldBoard)) {
+        if (!BoardHelper.areBoxArraysEqual(this.grid, oldBoard)) {
             randomSpawnBox();
             fireBoardChanged();
         }
     }
-    
-    /**
-     * Method to copy a given Box array to a new Box array.
-     * 
-     * @param oldBoard a box array that we want to copy
-     * @return a copied box array
-     */
-    private Box[][] copyBoxArray(final Box[][] oldBoard)
-    {
-        Box[][] newBoard = new Box[oldBoard.length][oldBoard[0].length];
-        for (int i = 0; i < oldBoard.length; i++) {
-            for (int j = 0; j < oldBoard[0].length; j++) {
-                newBoard[i][j] = new Box(oldBoard[i][j].getValue(), i, j);
-            }
-        }
-        return newBoard;
-    }
-    
+
     /**
      * Method to reverse the Game one step back.
      * 
@@ -287,40 +269,15 @@ public class Board
             
             swipeToDirection(SwipeDirection.values()[i]);
             // grid will be a possible future Board
-            // if grid == currentBoard return True
-            if (!areBoxArraysEqual(currentBoard, grid)) {
-                grid = copyBoxArray(currentBoard);
+            if (!BoardHelper.areBoxArraysEqual(currentBoard, grid)) {
+                grid = BoardHelper.copyBoxArray(currentBoard);
                 gameOver = false;
             }
             // else reset board and go to next direction
-            grid = copyBoxArray(currentBoard);
+            grid = BoardHelper.copyBoxArray(currentBoard);
         }
         return gameOver;
-    }
-    
-    
-    /**
-     * Method to check whether two box arrays are equal.
-     * 
-     * @return true if the given box arrays are equal
-     */
-    private boolean areBoxArraysEqual(final Box[][] currentBoard, 
-        final Box[][] futureBoard)
-    {
-        // TODO refactor to BoardHelper class as static method such that we hand
-        // in two boards as we do here
-        for (int i = 0; i < currentBoard.length; i++) {
-            for (int j = 0; j < currentBoard[0].length; j++) {
-                // not sure if the second/third conditions add value
-                // theoretically they should be the same already
-                //if (currentBoard[i][j].getValue() != futureBoard[i][j].getValue()) {
-                if (!currentBoard[i][j].equal(futureBoard[i][j])) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
+    }    
     
     /**
      * Method that returns a list consisting of the 
@@ -359,7 +316,6 @@ public class Board
         }
         return filled;
     }
-   
     
     /**
      * Spawns a new box in the grid at a random location with value 2.
@@ -384,11 +340,19 @@ public class Board
         return grid;
     }
     
+    /**
+     * Method that adds a boardlistener to the board which is notified if the board changes.
+     * 
+     * @parameter li A BoardListener to be added.
+     */
     public void addBoardListener(BoardListener li) {
         listeners.add(li);
     }
     
-    
+    /**
+     * Method that notifies boardlisteners that the board changed.
+     * 
+     */
     private void fireBoardChanged() {
         for (BoardListener li : listeners) {
             li.boardChanged(this);

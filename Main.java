@@ -13,9 +13,7 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(final String[] args) {
-        final Model model = new Model();
-        final TextUserInterface tui = new TextUserInterface(model);
-        tui.run();
+        GUI.run();
     }
     
 }
