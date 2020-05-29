@@ -1,9 +1,15 @@
 /**
- * @Author Maria Kolyvaki and Severin Husmann
- * @version 1 
+ * Class that runs the application.
+ * 
+ * @author Maria Kolyvaki and Severin Husmann
+ * @version final
  */
 public class Main {
     
+    /**
+     * Constructor for objects of class Main.
+     * 
+     */
     private Main() {
         // never instantiated
     }

@@ -1,21 +1,19 @@
-
-import java.awt.GridLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.geom.Rectangle2D;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
- * Write a description of class BoxUI here.
+ * Class that defines one box to "host" the Game.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Maria Kolyvaki and Severin Husmann
+ * @version final
  */
 public class BoxUI extends JComponent {
     private final Board game;
@@ -30,7 +28,11 @@ public class BoxUI extends JComponent {
     };
 
     /**
-     * Constructor for objects of class BoxUI
+     * Constructor for objects of class BoxUI.
+     * 
+     * @param game the Object of our Board class
+     * @param row the row of the Board we are currently
+     * @param column the column of the Board we are currently
      */
     public BoxUI(final Board game, final int row, final int column)
     {
@@ -46,6 +48,8 @@ public class BoxUI extends JComponent {
         });
     }
     
+    
+    @Override
     public void paintComponent(Graphics g) {
         // if value is not 0 paint the current value in a box
         int value = game.getState()[row][column].getValue();

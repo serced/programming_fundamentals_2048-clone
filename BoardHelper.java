@@ -1,8 +1,8 @@
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Random;
-import java.util.Objects; 
 import java.util.Arrays; 
+import java.util.LinkedList;
+import java.util.Objects; 
+import java.util.Random;
 import java.util.Stack;
 
 /**
@@ -38,13 +38,13 @@ public class BoardHelper
     /**
      * Method to check whether two box arrays are equal.
      * 
+     * @param currentBoard the current board to check for equality
+     * @param futureBoard the other board to check for equality
      * @return true if the given box arrays are equal
      */
     public static boolean areBoxArraysEqual(final Box[][] currentBoard, 
         final Box[][] futureBoard)
     {
-        // TODO refactor to BoardHelper class as static method such that we hand
-        // in two boards as we do here
         for (int i = 0; i < currentBoard.length; i++) {
             for (int j = 0; j < currentBoard[0].length; j++) {
                 if (!currentBoard[i][j].equal(futureBoard[i][j])) {

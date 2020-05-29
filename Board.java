@@ -1,8 +1,8 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.Random;
 import java.util.Objects; 
-import java.util.Arrays; 
+import java.util.Random;
 import java.util.Stack;
 
 /**
@@ -165,7 +165,7 @@ public class Board
      */
     public void undo()
     {
-        if(previousGrid != null) {
+        if (previousGrid != null) {
             grid = previousGrid;
             fireBoardChanged();
         }
@@ -246,6 +246,8 @@ public class Board
             case RIGHT:  
                 swipeRight();
                 break;
+            default:
+                break;
         }
         updatePreviousBoardIfBoardChanged(oldBoard);
     }
@@ -256,7 +258,7 @@ public class Board
      * 
      * @param oldBoard The previous grid to which we should compare the current board to
      */
-    private void updatePreviousBoardIfBoardChanged (Box[][] oldBoard) {
+    private void updatePreviousBoardIfBoardChanged(Box[][] oldBoard) {
         if (!BoardHelper.areBoxArraysEqual(this.grid, oldBoard)) {
             // only update previousGrid when something changed
             previousGrid = BoardHelper.copyBoxArray(oldBoard);
@@ -355,7 +357,7 @@ public class Board
     /**
      * Method that adds a boardlistener to the board which is notified if the board changes.
      * 
-     * @parameter li A BoardListener to be added.
+     * @param li A BoardListener to be added.
      */
     public void addBoardListener(BoardListener li) {
         listeners.add(li);

@@ -1,30 +1,33 @@
-import java.awt.event.KeyListener;
-import java.util.ArrayList;
-import java.awt.GridLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import java.util.Random;
 
 /**
  * Write a description of class GameSquare here.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Maria Kolyvaki and Severin Husmann
+ * @version final
  */
 public class GameSquare extends JComponent {
-    private final Board game;
-
+    private Board game;
+    //private MainFrame frame; 
     /**
-     * Constructor for objects of class GameSquare
+     * Constructor for objects of class GameSquare.
+     * 
+     * @param game the Board instance we will work with
      */
     public GameSquare(Board game)
     {
@@ -48,25 +51,23 @@ public class GameSquare extends JComponent {
         // gain control after pressing ActionListener JButton
         setFocusable(true); 
         registerKeyListener();
+        
         // enableEvents(AWTEvent.KEY_EVENT_MASK);
     }
     
+    @Override
     public void paintComponent(final Graphics g) {
         g.setColor(new Color(0xBBADA0));
         g.fillRect(0, 0, getWidth(), getHeight());
-        //final Painter painter = new Painter(g, 400);
         if (game.isGameOver() == true ) {
-            //System.out.println("Game Over mode");
-            g.setColor(Color.BLACK);
-            final Font font = new Font(Font.SANS_SERIF, Font.BOLD, 20);
-            final FontMetrics fm = g.getFontMetrics(font);
-            final Rectangle2D textsize = fm.getStringBounds("Game over", g);
-            g.drawString("Game over", 400, 400);
-            // option dialog for the Game over
-            //TO DO, I get here but I cannot draw the text
+            gameOver();
         }
     }
-
+    
+    /**
+     * Method responsible for enabling the teleoperation of the keyboard of the game.
+     * 
+     */
     private void registerKeyListener() {
             addKeyListener(new KeyAdapter() {
                 @Override
@@ -101,5 +102,20 @@ public class GameSquare extends JComponent {
                     // we should call that instead of the paintComponent
                 }
             });
+    }
+    
+    private void gameOver() {
+        String[] options = new String[]{"New Game", "Exit"};
+        int result = JOptionPane.showOptionDialog(this,"Game over.\n","Game Over!", JOptionPane.YES_NO_OPTION,
+                                        JOptionPane.INFORMATION_MESSAGE, null,options,options[0]);
+        if (result == JOptionPane.YES_OPTION) {
+            newGame();
+        } else {
+             System.exit(0);
+        }
+    }
+    
+    private void newGame() {
+       //frame = new MainFrame(new Board());
     }
 }
