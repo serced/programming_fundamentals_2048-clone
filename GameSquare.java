@@ -57,12 +57,13 @@ public class GameSquare extends JComponent {
         g.fillRect(0, 0, getWidth(), getHeight());
         //final Painter painter = new Painter(g, 400);
         if (game.isGameOver() == true ) {
-            System.out.println("Game Over mode");
+            //System.out.println("Game Over mode");
             g.setColor(Color.BLACK);
             final Font font = new Font(Font.SANS_SERIF, Font.BOLD, 20);
             final FontMetrics fm = g.getFontMetrics(font);
             final Rectangle2D textsize = fm.getStringBounds("Game over", g);
             g.drawString("Game over", 400, 400);
+            // option dialog for the Game over
             //TO DO, I get here but I cannot draw the text
         }
     }

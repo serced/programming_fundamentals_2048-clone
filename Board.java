@@ -174,7 +174,7 @@ public class Board
     {
         if(savedGrids.size() > 1) {
             savedGrids.pop();
-            Box[][] previousBoard = savedGrids.pop();
+            grid = savedGrids.pop();
         }
     }
     

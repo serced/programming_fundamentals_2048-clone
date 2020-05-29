@@ -55,7 +55,7 @@ public class BoxUI extends JComponent {
             // the numbers in the corresponding options of colors
             g.setColor(options[(int) (Math.log(value) / Math.log(2)) + 1]);
             g.fillRoundRect(0, 0, getWidth(), getHeight(), 25, 25);
-            g.setColor(value < 128 ? options[0] : options[1]);
+            //g.setColor(value < 128 ? options[0] : options[1]);
             final int centerWidth = getWidth() / 2;
             final int centerHeight = getHeight() / 2;
             // changes the color of the brush of the numbers to black
