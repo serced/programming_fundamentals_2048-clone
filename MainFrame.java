@@ -54,34 +54,29 @@ public class MainFrame extends JFrame /*implements KeyListener*/{
         // register listeners to corresponding buttons
         refresh.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
-                System.out.println("Refresh clicked");
-                //game.undo();
+                game.undo();
             }
         });
         right.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
-                System.out.println("right clicked");
-                game.swipeRight();
+                game.swipeToDirection(SwipeDirection.RIGHT);
             }
         });
         left.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
-                game.swipeLeft();
+                game.swipeToDirection(SwipeDirection.LEFT);
             }
         });
         up.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
-                game.swipeUp();
+                game.swipeToDirection(SwipeDirection.UP);
             }
         });
         down.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
-                game.swipeDown();
+                game.swipeToDirection(SwipeDirection.DOWN);
             }
-        }); 
-        
+        });         
     }
-    
-    
 }
 

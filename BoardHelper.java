@@ -12,7 +12,12 @@ import java.util.Stack;
  * @version 20.05.2020
  */
 public class BoardHelper
-{   
+{  
+    /**
+     * Private constructor of the class to show that it has only static methods.
+     */
+    private BoardHelper() {}
+    
     /**
      * Method to copy a given Box array to a new Box array.
      * 

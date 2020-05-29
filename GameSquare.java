@@ -4,16 +4,15 @@ import java.awt.GridLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.geom.Rectangle2D;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.*;
 import java.util.Random;
-import javax.swing.*;
-import java.awt.geom.Rectangle2D;
 
 /**
  * Write a description of class GameSquare here.
@@ -73,27 +72,26 @@ public class GameSquare extends JComponent {
                 @Override
                 public void keyPressed(final KeyEvent e) {
                     // invoked when a key has been pressed
-                    //System.out.println("I am the keyboard");
                     switch (e.getKeyCode()) {
                         // left arrow from keyboard
                         case KeyEvent.VK_LEFT:
-                            game.swipeLeft();
+                            game.swipeToDirection(SwipeDirection.LEFT);
                             break;
                         // right arrow from keyboard
                         case KeyEvent.VK_RIGHT:
-                            game.swipeRight();
+                            game.swipeToDirection(SwipeDirection.RIGHT);
                             break;
                         // up arrow from keyboard
                         case KeyEvent.VK_UP:
-                            game.swipeUp();
+                            game.swipeToDirection(SwipeDirection.UP);
                             break;
                         // down arrow from keyboard
                         case KeyEvent.VK_DOWN:
-                            game.swipeDown();
+                            game.swipeToDirection(SwipeDirection.DOWN);
                             break;
                         // backspace for undo from keyboard
                         case KeyEvent.VK_BACK_SPACE:
-                            //game.undo();
+                            game.undo();
                             break;
                         default:
                             // do nothing

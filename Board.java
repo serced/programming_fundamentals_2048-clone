@@ -18,7 +18,7 @@ public class Board
 {
     private static final int SIZE = 4;
     private Box[][] grid;
-    private Stack<Box[][]> savedGrids;
+    private Box[][] previousGrid;
     private ArrayList<BoardListener> listeners;
     
     /**
@@ -37,8 +37,6 @@ public class Board
         // call random generator
         randomSpawnBox();
         randomSpawnBox();
-        // why does this not work:
-        // this = new Board(SIZE);
     }
     
     /**
@@ -87,7 +85,6 @@ public class Board
      */
     public void swipeUp()
     {
-        //savedGrids.add(this.grid);
         rotateRight();
         swipeRight();
         rotateRight();
@@ -102,7 +99,6 @@ public class Board
      */
     public void swipeDown()
     {
-        //savedGrids.add(this.grid);
         rotateRight();
         rotateRight();
         rotateRight();
@@ -117,7 +113,6 @@ public class Board
      */
     public void swipeLeft()
     {
-        //savedGrids.add(this.grid);
         rotateRight();
         rotateRight();
         swipeRight();
@@ -143,8 +138,6 @@ public class Board
             }
         }
     }
-    
-    
     
     /**
      * Method that swipes right the current configuration 
@@ -172,9 +165,9 @@ public class Board
      */
     public void undo()
     {
-        if(savedGrids.size() > 1) {
-            savedGrids.pop();
-            grid = savedGrids.pop();
+        if(previousGrid != null) {
+            grid = previousGrid;
+            fireBoardChanged();
         }
     }
     
@@ -235,12 +228,17 @@ public class Board
      */
     public void swipeToDirection(SwipeDirection direction)
     {
+        // since swipes are implemented by using rotate x times and
+        // then swipeRight and rotate again we have to compare boards here
+        // when we want to implement undo
+        final Box[][] oldBoard = BoardHelper.copyBoxArray(grid);
+        
         switch (direction) {
-            case UP: 
+            case UP:
                 swipeUp();
                 break;
             case DOWN:  
-                swipeDown(); 
+                swipeDown();
                 break;
             case LEFT: 
                 swipeLeft();
@@ -248,6 +246,20 @@ public class Board
             case RIGHT:  
                 swipeRight();
                 break;
+        }
+        updatePreviousBoardIfBoardChanged(oldBoard);
+    }
+    
+    /**
+     * Method that updates the previous board if the given board is different
+     * from the current grid.
+     * 
+     * @param oldBoard The previous grid to which we should compare the current board to
+     */
+    private void updatePreviousBoardIfBoardChanged (Box[][] oldBoard) {
+        if (!BoardHelper.areBoxArraysEqual(this.grid, oldBoard)) {
+            // only update previousGrid when something changed
+            previousGrid = BoardHelper.copyBoxArray(oldBoard);
         }
     }
     
