@@ -33,27 +33,22 @@ public class BoardTest
     @Test
     public void testInitilization() {
         Board game = new Board();
-        assertEquals(2, game.filledBoxPositions().size());
         assertEquals(14, game.emptyBoxPositions().size());
     }
     
     @Test
-    public void testRandomGeneratorFullGrid() {
-        // TODO
-        /* something like this
-        int value = 1;
+    public void testRandomCheckFullGrid() {
+        
         for (int j = 0; j < grid.length; j++) {
             for (int i = 0; i < grid[0].length; i++) {
-                grid[j][i] = new Box(value, i, j);
-                value++;
+                grid[j][i] = new Box(2, i, j);
             }
         }
     
         Board game = new Board(grid);
+        game.randomSpawnBox();
         
         assertEquals(0, game.emptyBoxPositions().size());
-        assertEquals(true, game.isGameOver());
-        */
     }
     
     @Test
@@ -98,7 +93,7 @@ public class BoardTest
         assertEquals(2, state[2][2].getValue());
         assertEquals(4, state[3][2].getValue());
         
-        assertEquals(9, game.filledBoxPositions().size());
+        //assertEquals(9, game.filledBoxPositions().size());
         assertEquals(7, game.emptyBoxPositions().size());
     }
     
@@ -122,7 +117,7 @@ public class BoardTest
         assertEquals(8, state[2][3].getValue());
         assertEquals(8, state[3][3].getValue());
         
-        assertEquals(5, game.filledBoxPositions().size());
+        //assertEquals(5, game.filledBoxPositions().size());
         assertEquals(11, game.emptyBoxPositions().size());
     }
     
@@ -155,7 +150,7 @@ public class BoardTest
         assertEquals(0, state[0][3].getRow());
         assertEquals(3, state[0][3].getColumn());
         
-        assertEquals(5, game.filledBoxPositions().size());
+        //assertEquals(5, game.filledBoxPositions().size());
         assertEquals(11, game.emptyBoxPositions().size());
     }
     
@@ -190,8 +185,48 @@ public class BoardTest
         assertEquals(0, state[0][3].getRow());
         assertEquals(3, state[0][3].getColumn());
         
-        assertEquals(5, game.filledBoxPositions().size());
+        //assertEquals(5, game.filledBoxPositions().size());
         assertEquals(11, game.emptyBoxPositions().size());
+    }
+    
+    @Test
+    public void testUndo() {
+        int value = 2;
+        for (int j = 0; j < grid.length; j++) {
+            for (int i = 0; i < grid[0].length; i++) {
+                grid[j][i] = new Box(value, i, j);
+                value++;
+            }
+        }
+    
+        Board game = new Board(grid);
+        Box[][] temp = game.getState();
+        game.swipeToDirection(SwipeDirection.RIGHT);
+        game.swipeToDirection(SwipeDirection.LEFT);
+        game.undo();
+        
+        assertEquals(game.getState(), temp);
+    }
+    
+    @Test
+    public void testUndoPrevious() {
+        int value = 1;
+        for (int j = 0; j < grid.length; j++) {
+            for (int i = 0; i < grid[0].length; i++) {
+                grid[j][i] = new Box(value, i, j);
+                value++;
+            }
+        }
+        Board game = new Board(grid);
+        
+        game.swipeToDirection(SwipeDirection.RIGHT);
+        game.swipeToDirection(SwipeDirection.LEFT);
+        game.swipeToDirection(SwipeDirection.UP);
+        Box[][] temp = game.getState();
+        game.swipeToDirection(SwipeDirection.DOWN);
+        game.undo();
+        
+        assertEquals(game.getState(), temp);
     }
     
     @Test
@@ -206,7 +241,7 @@ public class BoardTest
     
         Board game = new Board(grid);
         
-        assertEquals(16, game.filledBoxPositions().size());
+        //assertEquals(16, game.filledBoxPositions().size());
         assertEquals(0, game.emptyBoxPositions().size());
         assertEquals(true, game.isGameOver());
     }
@@ -223,7 +258,7 @@ public class BoardTest
     
         Board game = new Board(grid);
         
-        assertEquals(15, game.filledBoxPositions().size());
+        //assertEquals(15, game.filledBoxPositions().size());
         assertEquals(1, game.emptyBoxPositions().size());
         assertEquals(false, game.isGameOver());
     }
@@ -241,7 +276,7 @@ public class BoardTest
         Board game = new Board(grid);
         
         Box[][] state = game.getState();
-        assertEquals(16, game.filledBoxPositions().size());
+        //assertEquals(16, game.filledBoxPositions().size());
         assertEquals(0, game.emptyBoxPositions().size());
         assertEquals(false, game.isGameOver());
     }

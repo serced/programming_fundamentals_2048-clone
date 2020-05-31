@@ -19,7 +19,7 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(final String[] args) {
-        GUI.run();
+        Gui.run();
     }
     
 }

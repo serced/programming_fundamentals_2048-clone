@@ -11,8 +11,8 @@ public class Box
 {
     // instance variables 
     private int value;
-    private int row;
-    private int column;
+    final private int row;
+    final private int column;
     
     /**
      * Constructor for objects of class Block.
@@ -21,7 +21,7 @@ public class Box
      * @param row The row of where the box will be stored in the boxArray
      * @param column The column of where the box will be stored in the boxArray
      */
-    public Box(int value, int row, int column)
+    public Box(final int value, final int row, final int column)
     {
         // initialise instance variables
         this.value = value;        
@@ -68,7 +68,7 @@ public class Box
      * @return  a boolean value that corresponds 
      *          to the existence of equality
      */
-    public boolean equal(Box other)
+    public boolean equal(final Box other)
     {
         return this.value == other.value;
     }

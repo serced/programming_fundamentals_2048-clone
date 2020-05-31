@@ -5,7 +5,7 @@
  * @author Maria Kolyvaki and Severin Husmann
  * @version final
  */
-public class GUI
+public class Gui
 {
     
     /**

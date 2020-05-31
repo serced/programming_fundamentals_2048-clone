@@ -1,19 +1,11 @@
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.Random;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 /**
  * Write a description of class GameSquare here.
@@ -29,7 +21,7 @@ public class GameSquare extends JComponent {
      * 
      * @param game the Board instance we will work with
      */
-    public GameSquare(Board game)
+    public GameSquare(final Board game)
     {
         super();
         this.game = game;
@@ -39,7 +31,7 @@ public class GameSquare extends JComponent {
         // set square layout of the squares
         this.setLayout(new GridLayout(4, 4, 5, 5));
         
-        Box[][] gameGrid = game.getState();
+        final Box[][] gameGrid = game.getState();
         // fill up the game with the corrsponding object of BoxUI type
         for (int i = 0; i < gameGrid.length; i++) {
             for (int j = 0; j < gameGrid[0].length; j++) {
@@ -59,7 +51,7 @@ public class GameSquare extends JComponent {
     public void paintComponent(final Graphics g) {
         g.setColor(new Color(0xBBADA0));
         g.fillRect(0, 0, getWidth(), getHeight());
-        if (game.isGameOver() == true ) {
+        if (game.isGameOver()) {
             gameOver();
         }
     }
@@ -105,8 +97,8 @@ public class GameSquare extends JComponent {
     }
     
     private void gameOver() {
-        String[] options = new String[]{"New Game", "Exit"};
-        int result = JOptionPane.showOptionDialog(this,"Game over.\n","Game Over!", JOptionPane.YES_NO_OPTION,
+        final String[] options = new String[]{"New Game", "Exit"};
+        final int result = JOptionPane.showOptionDialog(this,"Game over.\n","Game Over!", JOptionPane.YES_NO_OPTION,
                                         JOptionPane.INFORMATION_MESSAGE, null,options,options[0]);
         if (result == JOptionPane.YES_OPTION) {
             newGame();

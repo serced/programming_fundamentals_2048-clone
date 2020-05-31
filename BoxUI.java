@@ -1,13 +1,6 @@
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.GridLayout;
-import java.awt.geom.Rectangle2D;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 /**
  * Class that defines one box to "host" the Game.
@@ -37,12 +30,13 @@ public class BoxUI extends JComponent {
     public BoxUI(final Board game, final int row, final int column)
     {
         // initialise instance variables
+        super();
         this.game = game;
         this.row = row;
         this.column = column;
         
         game.addBoardListener(new BoardListener() {
-            public void boardChanged(Board game) {
+            public void boardChanged(final Board game) {
                 repaint();
             }
         });
@@ -50,9 +44,9 @@ public class BoxUI extends JComponent {
     
     
     @Override
-    public void paintComponent(Graphics g) {
+    public void paintComponent(final Graphics g) {
         // if value is not 0 paint the current value in a box
-        int value = game.getState()[row][column].getValue();
+        final int value = game.getState()[row][column].getValue();
         if (game.getState()[row][column].getValue() != 0) {
             // change the color with respect to its value
             // basically from the properties of logarithm of base two we get 

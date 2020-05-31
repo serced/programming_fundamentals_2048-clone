@@ -1,9 +1,5 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Objects; 
-import java.util.Random;
-import java.util.Stack;
+
 
 /**
  * This class should contain the main grid of our Game and 
@@ -39,24 +35,6 @@ public class Board
         randomSpawnBox();
     }
     
-    /**
-     * Constructor for objects of class Board.
-     * 
-     * @param dim the square dimensions for a new Board object
-     */
-    public Board(final int dim)
-    {
-        listeners = new ArrayList<>();
-        grid = new Box[dim][dim];
-        for (int i = 0; i < dim; i++) {
-            for (int j = 0; j < dim; j++) {
-                grid[i][j] = new Box(0,i,j);
-            }
-        }
-        // call random generator
-        randomSpawnBox();
-        randomSpawnBox();
-    }
     
     /**
      * Constructor that creates a board from a 2-dimensional array.
@@ -208,8 +186,6 @@ public class Board
             // loop over rows
             for (int j = 0; j < grid.length; j++) {
                 // now merge when possible
-                final Box left = grid[j][i - 1];
-                final Box right = grid[j][i];
                 if (grid[j][i - 1].canMerge(grid[j][i])) {
                     grid[j][i] = grid[j][i - 1].merge(grid[j][i]);
                     grid[j][i - 1] = new Box(0, j, i - 1);
@@ -226,7 +202,7 @@ public class Board
      * @param direction The direction in which we want to swipe the board.
      * 
      */
-    public void swipeToDirection(SwipeDirection direction)
+    public void swipeToDirection(final SwipeDirection direction)
     {
         // since swipes are implemented by using rotate x times and
         // then swipeRight and rotate again we have to compare boards here
@@ -258,7 +234,7 @@ public class Board
      * 
      * @param oldBoard The previous grid to which we should compare the current board to
      */
-    private void updatePreviousBoardIfBoardChanged(Box[][] oldBoard) {
+    private void updatePreviousBoardIfBoardChanged(final Box[][] oldBoard) {
         if (!BoardHelper.areBoxArraysEqual(this.grid, oldBoard)) {
             // only update previousGrid when something changed
             previousGrid = BoardHelper.copyBoxArray(oldBoard);
@@ -301,7 +277,7 @@ public class Board
      */
     public ArrayList<Box> emptyBoxPositions()
     {
-        ArrayList<Box> empty = new ArrayList<Box>();
+        final ArrayList<Box> empty = new ArrayList<Box>();
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 if (grid[i][j].getValue() == 0) {
@@ -311,25 +287,7 @@ public class Board
         }
         return empty;
     }
-       
-    /**
-     * Method that returns a list consisting of the 
-     * points of the grid that are filled.
-     *
-     * @return the list of Boxes
-     */
-    public ArrayList<Box> filledBoxPositions()
-    {
-        ArrayList<Box> filled = new ArrayList<Box>();
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
-                if (grid[i][j].getValue() != 0) {
-                    filled.add(new Box(grid[i][j].getValue(), i,j));
-                }
-            }
-        }
-        return filled;
-    }
+    
     
     /**
      * Spawns a new box in the grid at a random location with value 2.
@@ -337,10 +295,10 @@ public class Board
      */
     public void randomSpawnBox()
     {   
-        ArrayList<Box> availPositions = this.emptyBoxPositions();
+        final ArrayList<Box> availPositions = this.emptyBoxPositions();
         if (!availPositions.isEmpty()) {
-            int randomPosition = (int) (Math.random() * availPositions.size());
-            Box temp = availPositions.get(randomPosition);
+            final int randomPosition = (int) (Math.random() * availPositions.size());
+            final Box temp = availPositions.get(randomPosition);
             grid[temp.getRow()][temp.getColumn()] = new Box(2, temp.getRow(),temp.getColumn());
         }
     }
@@ -353,13 +311,14 @@ public class Board
     public Box[][] getState() {
         return grid;
     }
+        
     
     /**
      * Method that adds a boardlistener to the board which is notified if the board changes.
      * 
      * @param li A BoardListener to be added.
      */
-    public void addBoardListener(BoardListener li) {
+    public void addBoardListener(final BoardListener li) {
         listeners.add(li);
     }
     
@@ -368,7 +327,7 @@ public class Board
      * 
      */
     private void fireBoardChanged() {
-        for (BoardListener li : listeners) {
+        for (final BoardListener li : listeners) {
             li.boardChanged(this);
         }
     }
