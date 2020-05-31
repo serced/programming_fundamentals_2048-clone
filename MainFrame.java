@@ -12,9 +12,6 @@ import javax.swing.JPanel;
  * @version 20.05.2020
  */
 public class MainFrame extends JFrame {
-    
-    private final Board game;
-
     /**
      * Create a new MainFrame operating on the given game model.
      * @param game The game model of this application
@@ -22,7 +19,6 @@ public class MainFrame extends JFrame {
     public MainFrame(final Board game) {
         // initialize instance variables
         super();
-        this.game = game;
         // operation performed when we close the frame 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         

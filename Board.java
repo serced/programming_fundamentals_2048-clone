@@ -309,7 +309,9 @@ public class Board
      * @return Returns the current box array grid representing the current state
      */
     public Box[][] getState() {
-        return grid;
+        // to not expose our grid/array we should do
+        return BoardHelper.copyBoxArray(grid);
+        //return grid;
     }
         
     

@@ -200,12 +200,38 @@ public class BoardTest
         }
     
         Board game = new Board(grid);
-        Box[][] temp = game.getState();
         game.swipeToDirection(SwipeDirection.RIGHT);
+        final Box[][] oldBoard = game.getState();
         game.swipeToDirection(SwipeDirection.LEFT);
         game.undo();
-        
-        assertEquals(game.getState(), temp);
+        final Box[][] newBoard = game.getState();
+        for (int j = 0; j < grid.length; j++) {
+            for (int i = 0; i < grid[0].length; i++) {
+                assertEquals(newBoard[j][i].getValue(), oldBoard[j][i].getValue());
+            }
+        }
+    }
+    
+    @Test
+    public void testUndoNull() {
+        int value = 2;
+        for (int j = 0; j < grid.length; j++) {
+            for (int i = 0; i < grid[0].length; i++) {
+                grid[j][i] = new Box(value, i, j);
+                value++;
+            }
+        }
+    
+        Board game = new Board(grid);
+        final Box[][] oldBoard = game.getState();
+        game.swipeToDirection(SwipeDirection.LEFT);
+        game.undo();
+        final Box[][] newBoard = game.getState();
+        for (int j = 0; j < grid.length; j++) {
+            for (int i = 0; i < grid[0].length; i++) {
+                assertEquals(newBoard[j][i].getValue(), oldBoard[j][i].getValue());
+            }
+        }
     }
     
     @Test
@@ -222,11 +248,15 @@ public class BoardTest
         game.swipeToDirection(SwipeDirection.RIGHT);
         game.swipeToDirection(SwipeDirection.LEFT);
         game.swipeToDirection(SwipeDirection.UP);
-        Box[][] temp = game.getState();
+        final Box[][] oldBoard = game.getState();
         game.swipeToDirection(SwipeDirection.DOWN);
         game.undo();
-        
-        assertEquals(game.getState(), temp);
+        final Box[][] newBoard = game.getState();
+                for (int j = 0; j < grid.length; j++) {
+            for (int i = 0; i < grid[0].length; i++) {
+                assertEquals(newBoard[j][i].getValue(), oldBoard[j][i].getValue());
+            }
+        }
     }
     
     @Test
@@ -245,6 +275,7 @@ public class BoardTest
         assertEquals(0, game.emptyBoxPositions().size());
         assertEquals(true, game.isGameOver());
     }
+
     
     @Test
     public void testIsGameOverFalseBoardNotFull() {

@@ -13,7 +13,7 @@ public class BoxUI extends JComponent {
     private final int row;
     private final int column;
     
-    final Color[] options = {
+    private final Color[] options = {
         new Color(0x701710), new Color(0xFFE4C3), new Color(0xfff4d3),
         new Color(0xffdac3), new Color(0xe7b08e), new Color(0xe7bf8e),
         new Color(0xffc4c3), new Color(0xE7948e), new Color(0xbe7e56),
@@ -34,7 +34,6 @@ public class BoxUI extends JComponent {
         this.game = game;
         this.row = row;
         this.column = column;
-        
         game.addBoardListener(new BoardListener() {
             public void boardChanged(final Board game) {
                 repaint();
@@ -53,7 +52,6 @@ public class BoxUI extends JComponent {
             // the numbers in the corresponding options of colors
             g.setColor(options[(int) (Math.log(value) / Math.log(2)) + 1]);
             g.fillRoundRect(0, 0, getWidth(), getHeight(), 25, 25);
-            //g.setColor(value < 128 ? options[0] : options[1]);
             final int centerWidth = getWidth() / 2;
             final int centerHeight = getHeight() / 2;
             // changes the color of the brush of the numbers to black

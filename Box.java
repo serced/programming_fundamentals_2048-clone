@@ -11,8 +11,8 @@ public class Box
 {
     // instance variables 
     private int value;
-    final private int row;
-    final private int column;
+    private final int row;
+    private final int column;
     
     /**
      * Constructor for objects of class Block.
