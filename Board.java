@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 
-
 /**
  * This class should contain the main grid of our Game and 
  * all the methods that handle a specific
@@ -8,7 +7,7 @@ import java.util.ArrayList;
  * be a 2-dimensional array, are going to be of Class type Box.
  * 
  * @author Maria Kolyvaki and Severin Husmann
- * @version 20.05.2020
+ * @version final
  */
 public class Board
 {
@@ -146,7 +145,7 @@ public class Board
         if (previousGrid != null) {
             grid = previousGrid;
             fireBoardChanged();
-        }
+        } 
     }
     
     /**
@@ -256,7 +255,6 @@ public class Board
         final Box[][] currentBoard = getState();
         boolean gameOver = true;
         for (int i = 0; i < SwipeDirection.values().length; i++) {
-            
             swipeToDirection(SwipeDirection.values()[i]);
             // grid will be a possible future Board
             if (!BoardHelper.areBoxArraysEqual(currentBoard, grid)) {
@@ -311,7 +309,6 @@ public class Board
     public Box[][] getState() {
         // to not expose our grid/array we should do
         return BoardHelper.copyBoxArray(grid);
-        //return grid;
     }
         
     

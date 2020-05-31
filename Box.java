@@ -5,7 +5,7 @@
  * be a 2-dimensional array, are going to be of Class type Box.
  * 
  * @author Maria Kolyvaki and Severin Husmann
- * @version 20.05.2020
+ * @version final
  */
 public class Box
 {

@@ -3,7 +3,7 @@
  * This class should contain the provide useful static method functionality to the Board class.
  * 
  * @author Maria Kolyvaki and Severin Husmann
- * @version 20.05.2020
+ * @version final
  */
 public class BoardHelper
 {  

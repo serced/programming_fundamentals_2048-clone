@@ -7,7 +7,7 @@ import java.util.Objects;
  * The test class BoardTest.
  *
  * @author  Maria Kolyvaki and Severin Husmann
- * @version 16.02.2020
+ * @version final
  */
 public class BoardTest
 {
@@ -93,7 +93,6 @@ public class BoardTest
         assertEquals(2, state[2][2].getValue());
         assertEquals(4, state[3][2].getValue());
         
-        //assertEquals(9, game.filledBoxPositions().size());
         assertEquals(7, game.emptyBoxPositions().size());
     }
     
@@ -117,7 +116,6 @@ public class BoardTest
         assertEquals(8, state[2][3].getValue());
         assertEquals(8, state[3][3].getValue());
         
-        //assertEquals(5, game.filledBoxPositions().size());
         assertEquals(11, game.emptyBoxPositions().size());
     }
     
@@ -150,7 +148,6 @@ public class BoardTest
         assertEquals(0, state[0][3].getRow());
         assertEquals(3, state[0][3].getColumn());
         
-        //assertEquals(5, game.filledBoxPositions().size());
         assertEquals(11, game.emptyBoxPositions().size());
     }
     
@@ -185,7 +182,6 @@ public class BoardTest
         assertEquals(0, state[0][3].getRow());
         assertEquals(3, state[0][3].getColumn());
         
-        //assertEquals(5, game.filledBoxPositions().size());
         assertEquals(11, game.emptyBoxPositions().size());
     }
     
@@ -201,6 +197,7 @@ public class BoardTest
     
         Board game = new Board(grid);
         game.swipeToDirection(SwipeDirection.RIGHT);
+        game.swipeToDirection(SwipeDirection.UP);
         final Box[][] oldBoard = game.getState();
         game.swipeToDirection(SwipeDirection.LEFT);
         game.undo();
@@ -218,8 +215,8 @@ public class BoardTest
         for (int j = 0; j < grid.length; j++) {
             for (int i = 0; i < grid[0].length; i++) {
                 grid[j][i] = new Box(value, i, j);
-                value++;
             }
+            value = value + 2;
         }
     
         Board game = new Board(grid);
@@ -236,12 +233,12 @@ public class BoardTest
     
     @Test
     public void testUndoPrevious() {
-        int value = 1;
+        int value = 2;
         for (int j = 0; j < grid.length; j++) {
             for (int i = 0; i < grid[0].length; i++) {
-                grid[j][i] = new Box(value, i, j);
-                value++;
+                grid[j][i] = new Box(value, i, j);  
             }
+            value = value + 2;
         }
         Board game = new Board(grid);
         
@@ -252,7 +249,7 @@ public class BoardTest
         game.swipeToDirection(SwipeDirection.DOWN);
         game.undo();
         final Box[][] newBoard = game.getState();
-                for (int j = 0; j < grid.length; j++) {
+        for (int j = 0; j < grid.length; j++) {
             for (int i = 0; i < grid[0].length; i++) {
                 assertEquals(newBoard[j][i].getValue(), oldBoard[j][i].getValue());
             }
@@ -271,7 +268,6 @@ public class BoardTest
     
         Board game = new Board(grid);
         
-        //assertEquals(16, game.filledBoxPositions().size());
         assertEquals(0, game.emptyBoxPositions().size());
         assertEquals(true, game.isGameOver());
     }
@@ -289,7 +285,6 @@ public class BoardTest
     
         Board game = new Board(grid);
         
-        //assertEquals(15, game.filledBoxPositions().size());
         assertEquals(1, game.emptyBoxPositions().size());
         assertEquals(false, game.isGameOver());
     }
@@ -306,11 +301,25 @@ public class BoardTest
     
         Board game = new Board(grid);
         
-        Box[][] state = game.getState();
-        //assertEquals(16, game.filledBoxPositions().size());
+        //Box[][] state = game.getState();
         assertEquals(0, game.emptyBoxPositions().size());
         assertEquals(false, game.isGameOver());
     }
     
-    // TODO add test for spwaning box only when something changed
+    @Test
+    public void testFirePositionChangedRegisterListener() {
+        int value = 2;
+        for (int j = 0; j < grid.length; j++) {
+            for (int i = 0; i < grid[0].length; i++) {
+                grid[j][i] = new Box(value, i, j);
+            }
+            value = value + 2;
+        }
+    
+        Board game = new Board(grid);
+        TestListener li = new TestListener();
+        game.addBoardListener(li);
+        game.swipeToDirection(SwipeDirection.RIGHT);
+        assertEquals(true, li.isChanged());
+    }
 }

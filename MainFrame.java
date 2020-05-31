@@ -9,9 +9,11 @@ import javax.swing.JPanel;
  * This class implements the mainframe of the 2048 game implemented in the Board Class.
  *
  * @author Maria Kolyvaki and Severin
- * @version 20.05.2020
+ * @version final
  */
 public class MainFrame extends JFrame {
+    private Board game;
+    
     /**
      * Create a new MainFrame operating on the given game model.
      * @param game The game model of this application
@@ -19,6 +21,7 @@ public class MainFrame extends JFrame {
     public MainFrame(final Board game) {
         // initialize instance variables
         super();
+        this.game = game;
         // operation performed when we close the frame 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
@@ -26,6 +29,10 @@ public class MainFrame extends JFrame {
         final GameSquare gameSquare = new GameSquare(game);
         this.add(gameSquare, BorderLayout.CENTER);
         
+        addButtons();        
+    }
+    
+    private void addButtons() {
         // buttons panel
         final JPanel buttons = new JPanel();
         final JButton refresh = new JButton("↺");
@@ -66,7 +73,7 @@ public class MainFrame extends JFrame {
             public void actionPerformed(final ActionEvent ev) {
                 game.swipeToDirection(SwipeDirection.DOWN);
             }
-        });         
+        });  
     }
     
 }
