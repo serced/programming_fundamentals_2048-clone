@@ -102,6 +102,8 @@ public class GameSquare extends JComponent {
     }
     
     private void newGame() {
-       //frame = new MainFrame(new Board());
+        game = new Board();
+        //JOptionPane in this case should be closed automatically and we cannot close them
+        // form the object that fires them 
     }
 }
